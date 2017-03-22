@@ -13,52 +13,75 @@
 import {h} from 'preact';
 import render from 'preact-render-to-string';
 import {Provider} from 'preact-redux';
-import {applyMiddleware, compose, createStore} from 'redux';
+import {applyMiddleware, createStore} from 'redux';
 import {createEpicMiddleware} from 'redux-observable';
 import {StaticRouter} from 'react-router';
-import {IntlProvider, FormattedMessage} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 
 /**
  * Import local dependencies.
  */
 import Root from './component';
-import rootReducer from './reducer';
+import {rootReducer} from './reducer';
 import rootEpic from './epic';
+import {ROOT_STATE_READY_TO_RENDER} from './actions';
 
 /**
- * TODO
- * In SSR we can build in all locales and messages for all locales into the server bundle.
- * In CDN we should dynamically load the user locale and messages for the user locale only.
+ * Export the promise factory.
  */
+export default function (req) {
 
-/**
- * Create the epic middleware.
- */
-const epicMiddleware = createEpicMiddleware(rootEpic);
+  /**
+   * Create a new promise for the current request.
+   */
+  return new Promise((resolve) => {
 
-/**
- * Create the store.
- */
-let store = createStore(
-  rootReducer, // TODO cobine with fake/prerendered router state
-  applyMiddleware(epicMiddleware)
-);
+    /**
+     * Injected reducer to process the "ready to render" action.
+     */
+    let finalRender = true;
+    const serverReducer = (state = {}, action) => {
+      console.log('x', action);
+      if (action.type === ROOT_STATE_READY_TO_RENDER && finalRender) {
+        finalRender = false;
+        resolve(renderApp());
+      }
+      return state;
+    };
 
-/**
- * Render the application. TODO once the state is stable/ready!
- */
-let context = {};
-let html = render(
-      <Provider store={store}>
-        <IntlProvider locale="en">
-          <StaticRouter location="/" context={context}>
-            <Root/>
-          </StaticRouter>
-        </IntlProvider>
-      </Provider>
-);
+    /**
+     * Create the epic middleware.
+     */
+    const epicMiddleware = createEpicMiddleware(rootEpic);
 
-/**
- *
- */
-export default Promise.resolve({context, html});
+    /**
+     * Create the store.
+     */
+    let store = createStore(
+      rootReducer(serverReducer),
+      applyMiddleware(epicMiddleware)
+    );
+
+    /**
+     * Render the application.
+     */
+    const renderApp = () => {
+      let context = {};
+      let html = render(
+        <Provider store={store}>
+          <IntlProvider locale="en">
+            <StaticRouter location={req.url} context={context}>
+              <Root/>
+            </StaticRouter>
+          </IntlProvider>
+        </Provider>
+      );
+      return {context, html};
+    };
+
+    /**
+     * Initial render.
+     */
+    renderApp();
+  });
+}

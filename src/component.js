@@ -6,7 +6,23 @@ import {push} from 'react-router-redux'
 import Home from './components/home/component';
 import About from './components/about/component';
 
+import {fetchGraphQLQueryCreator} from './actions';
+
 class App extends Component {
+
+  // Called on server and client.
+  componentWillMount = () => {
+    console.log('componentWillMount');
+    setTimeout(() => {
+      this.props.onReady();
+    });
+  };
+
+  // Called only on the client.
+  componentDidMount = () => {
+    console.log('componentDidMount');
+  };
+
   render({onNavigateAbout, onNavigateHome, aTest}, state) {
     return (
       <div>
@@ -37,9 +53,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onNavigateAbout: () => dispatch(push('/about')),
-    onNavigateHome: () => dispatch(push('/'))
+    onNavigateHome: () => dispatch(push('/')),
+    onReady: () => dispatch(fetchGraphQLQueryCreator({query: `{ report(id: 4711) { name } }`})
+    )
   }
-}
+};
 
 export default connect(
   mapStateToProps,

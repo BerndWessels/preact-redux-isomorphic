@@ -10,6 +10,8 @@
 /**
  * Export action types.
  */
+export const ROOT_STATE_READY_TO_RENDER = 'ROOT_STATE_READY_TO_RENDER';
+
 export const ROOT_FETCH_GRAPHQL_QUERY = 'ROOT_FETCH_GRAPHQL_QUERY';
 export const ROOT_FETCH_GRAPHQL_QUERY_CANCEL = 'ROOT_FETCH_GRAPHQL_QUERY_CANCEL';
 export const ROOT_FETCH_GRAPHQL_QUERY_SUCCEEDED = 'ROOT_FETCH_GRAPHQL_QUERY_SUCCEEDED';
@@ -19,8 +21,10 @@ export const ROOT_FETCH_GRAPHQL_QUERY_PENDING = 'ROOT_FETCH_GRAPHQL_QUERY_PENDIN
 /**
  * Export action creators.
  */
+export const rootStateReadyToRenderCreator = () => ({type: ROOT_STATE_READY_TO_RENDER});
+
 export const fetchGraphQLQueryCreator = (payload) => ({type: ROOT_FETCH_GRAPHQL_QUERY, payload});
-export const fetchGraphQLQueryCancelCreator = (payload) => ({type: ROOT_FETCH_GRAPHQL_QUERY_CANCEL});
+export const fetchGraphQLQueryCancelCreator = () => ({type: ROOT_FETCH_GRAPHQL_QUERY_CANCEL});
 export const fetchGraphQLQuerySucceededCreator = (payload) => ({type: ROOT_FETCH_GRAPHQL_QUERY_SUCCEEDED, payload});
 export const fetchGraphQLQueryFailedCreator = (payload) => ({type: ROOT_FETCH_GRAPHQL_QUERY_FAILED, payload});
-export const fetchGraphQLQueryPendingCreator = (payload) => ({type: ROOT_FETCH_GRAPHQL_QUERY_PENDING});
+export const fetchGraphQLQueryPendingCreator = () => ({type: ROOT_FETCH_GRAPHQL_QUERY_PENDING});

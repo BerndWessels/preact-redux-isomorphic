@@ -44,20 +44,21 @@ app.use('/', express.static(path.join(__dirname, '../client'), {index: false, ma
 //app.use('/service-worker.js', express.static('build/public/service-worker.js'))
 app.get('*', (req, res, next) => {
   try {
-    root.then(({context, html}) => {
-      console.log('!!!', context, html, indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`));
-      res.send(indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`));//`<!DOCTYPE html><html><body>Bernd</body></html>`);
+    root(req).then(({context, html}) => {
+      console.log('!!!', context, html, indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`), '!!!');
+      res.send(indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`));
     });
   } catch (e) {
-    next(e)
+    console.log(e);
+    next(e);
   }
 });
 
 /**
  * Load the ssl certificates.
  */
-const privateKey = fs.readFileSync(path.join(__dirname, '../../../certificates/localhost.key'));
-const certificate = fs.readFileSync(path.join(__dirname, '../../../certificates/localhost.crt'));
+const privateKey = fs.readFileSync(path.join(__dirname, '../../certificates/localhost.key'));
+const certificate = fs.readFileSync(path.join(__dirname, '../../certificates/localhost.crt'));
 
 /**
  * Create and run the server.

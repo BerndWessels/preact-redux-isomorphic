@@ -22,9 +22,21 @@ const aReducer = (state = {test: 'wessels'}, action) => {
 };
 
 /**
- * Export the root reducer.
+ * Collect all reducers.
  */
-export default combineReducers({
+const reducers = {
   a: aReducer,
   router: routerReducer
-});
+};
+
+/**
+ * Export the root reducer for server-side rendering.
+ */
+export function rootReducer(serverReducer) {
+  return combineReducers({...reducers, _server_: serverReducer});
+}
+
+/**
+ * Export the root reducer.
+ */
+export default combineReducers(reducers);

@@ -17,6 +17,7 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -30,10 +31,10 @@ module.exports = function () {
   // Build sass loaders.
   const sassLoaders = []
     .concat(DEV ? [
-        {
-          //https://github.com/webpack-contrib/style-loader
-          loader: 'style-loader'
-        }] : [])
+      {
+        //https://github.com/webpack-contrib/style-loader
+        loader: 'style-loader'
+      }] : [])
     .concat([
       {
         // https://github.com/webpack-contrib/css-loader
@@ -44,8 +45,8 @@ module.exports = function () {
             importLoaders: 2
           },
           DEV ? {
-              localIdentName: "[path]---[name]---[local]---[hash:base64:5]"
-            } : {}
+            localIdentName: "[path]---[name]---[local]---[hash:base64:5]"
+          } : {}
         )
       },
       {
@@ -115,7 +116,7 @@ module.exports = function () {
             ],
             plugins: [
               'transform-class-properties',
-              // 'transform-object-rest-spread',
+              'transform-object-rest-spread',
               ['transform-react-jsx', {pragma: 'h'}]
             ]
           },
@@ -130,6 +131,10 @@ module.exports = function () {
     plugins: [
       // https://github.com/johnagan/clean-webpack-plugin
       new CleanWebpackPlugin(WEB ? ['dist/client'] : ['dist/server'], __dirname),
+      // https://github.com/kevlened/copy-webpack-plugin
+      new CopyWebpackPlugin([
+        {from: 'public'}
+      ]),
       // https://webpack.js.org/plugins/loader-options-plugin
       new webpack.LoaderOptionsPlugin({
         minimize: !DEV,
@@ -143,38 +148,38 @@ module.exports = function () {
         }
       })
     ].concat(WEB ? [
-        // https://github.com/ampedandwired/html-webpack-plugin
-        new HtmlWebpackPlugin({
-          template: path.resolve(__dirname, './src/index.ejs'),
-          inject: false,
-          baseurl: '/'
-        })
-      ] : [])
+      // https://github.com/ampedandwired/html-webpack-plugin
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, './src/index.ejs'),
+        inject: false,
+        baseurl: '/'
+      })
+    ] : [])
       .concat(DEV ? [
-          // prints more readable module names in the browser console on HMR updates
-          new webpack.NamedModulesPlugin()
-        ] : [])
+        // prints more readable module names in the browser console on HMR updates
+        new webpack.NamedModulesPlugin()
+      ] : [])
       .concat(!DEV ? [
-          // https://github.com/webpack-contrib/extract-text-webpack-plugin
-          new ExtractTextPlugin({
-            filename: '[name].[hash].css'
-          }),
-          // https://github.com/webpack-contrib/uglifyjs-webpack-plugin
-          new webpack.optimize.UglifyJsPlugin({
-            compress: {
-              screw_ie8: true,
-              warnings: false
-            },
-            output: {
-              comments: false,
-              screw_ie8: true
-            },
-            mangle: {
-              screw_ie8: true
-            },
-            sourceMap: true
-          })
-        ] : []),
+        // https://github.com/webpack-contrib/extract-text-webpack-plugin
+        new ExtractTextPlugin({
+          filename: '[name].[hash].css'
+        }),
+        // https://github.com/webpack-contrib/uglifyjs-webpack-plugin
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            screw_ie8: true,
+            warnings: false
+          },
+          output: {
+            comments: false,
+            screw_ie8: true
+          },
+          mangle: {
+            screw_ie8: true
+          },
+          sourceMap: true
+        })
+      ] : []),
     // https://webpack.js.org/configuration/devtool
     devtool: DEV ? 'cheap-module-eval-source-map' : 'source-map',
     // https://webpack.js.org/configuration/other-options/#bail
@@ -190,8 +195,8 @@ module.exports = function () {
       publicPath: '/',
       contentBase: './src',
       historyApiFallback: true,
-      key: fs.readFileSync(path.resolve(__dirname, '../certificates/localhost.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, '../certificates/localhost.crt')),
+      key: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.crt')),
       proxy: {
         // OPTIONAL: proxy configuration:
         // '/optional-prefix/**': { // path pattern to rewrite
