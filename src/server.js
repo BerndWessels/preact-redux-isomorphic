@@ -12,43 +12,57 @@
 /**
  * Import dependencies.
  */
-//require('source-map-support').install()
-//require('isomorphic-fetch')
-//const { cacheControl, strictTransportSecurity } = require('./middleware')
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const express = require('express');
-const compression = require('compression');
-const root = require('./index.server').default;
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import express from 'express';
+import compression from 'compression';
+
+/**
+ * Import local dependencies.
+ */
+import root from './index.server';
 
 /**
  * Read the index.html template.
  */
-let indexHtml = fs.readFileSync(path.join(__dirname, '../client/index.html'), 'utf8');
+const indexHtml = fs.readFileSync(path.join(__dirname, '../client/index.html'), 'utf8');
 
 /**
  * Create the express server.
  */
 const app = express();
+
+// Log incoming requests.
 app.use((req, res, next) => {
   console.log(req.url);
   next()
 });
+
+// Remove unnecessary headers.
 app.disable('x-powered-by');
+
+// Enable compression.
 app.use(compression());
-//app.use(strictTransportSecurity());
-//app.use('/public', express.static('build/public', { maxAge: '365d' }))
+
+// Serve all static content apart from the index.html.
+// TODO Static content should be hosted and requested from a CDN and not from here.
 app.use('/', express.static(path.join(__dirname, '../client'), {index: false, maxAge: '365d'}));
-//app.use(cacheControl())
-//app.use('/service-worker.js', express.static('build/public/service-worker.js'))
+
+// Serve the PWA service worker.
+//app.use('/service-worker.js', express.static('build/public/service-worker.js'));
+
+// Serve the index.html for everything else.
 app.get('*', (req, res, next) => {
   try {
-    root(req).then(({context, html}) => {
-      console.log('!!!', context, html, indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`), '!!!');
-      res.send(indexHtml.replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`));
+    root(req).then(({context, html, state}) => {
+      res.send(indexHtml
+        .replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`)
+        .replace(/window.__INITIAL_STATE__ = null;/m, `window.__INITIAL_STATE__ = ${JSON.stringify(state)};`)
+      );
     });
   } catch (e) {
+    // TODO Better error handling/reporting needed.
     console.log(e);
     next(e);
   }

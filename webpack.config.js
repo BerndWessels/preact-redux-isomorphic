@@ -191,19 +191,12 @@ module.exports = function () {
     // https://webpack.js.org/configuration/dev-server
     devServer: {
       port: process.env.PORT || 8080,
-      host: 'localhost',
+      host: 'frae-local.fraedom-dev.com',
       publicPath: '/',
       contentBase: './src',
       historyApiFallback: true,
       key: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.crt')),
-      proxy: {
-        // OPTIONAL: proxy configuration:
-        // '/optional-prefix/**': { // path pattern to rewrite
-        //   target: 'http://target-host.com',
-        //   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
-        // }
-      }
+      cert: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.crt'))
     }
   };
 };

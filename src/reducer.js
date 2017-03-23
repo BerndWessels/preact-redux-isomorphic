@@ -16,8 +16,14 @@ import {routerReducer} from 'react-router-redux';
 /**
  * Import local dependencies.
  */
+import {ROOT_FETCH_GRAPHQL_QUERY_SUCCEEDED} from './actions';
+
 // TODO import other reducers here
-const aReducer = (state = {test: 'wessels'}, action) => {
+const aReducer = (state = {test: 'wessels yeah!'}, action) => {
+  if (action.type === ROOT_FETCH_GRAPHQL_QUERY_SUCCEEDED) {
+    // TODO just a test
+    return Object.assign({}, state, {report: action.payload.report.name});
+  }
   return state;
 };
 

@@ -41,10 +41,10 @@ export default function (req) {
      */
     let finalRender = true;
     const serverReducer = (state = {}, action) => {
-      console.log('x', action);
+      console.log('action => ', action);
       if (action.type === ROOT_STATE_READY_TO_RENDER && finalRender) {
         finalRender = false;
-        resolve(renderApp());
+        resolve(renderRoot());
       }
       return state;
     };
@@ -65,7 +65,7 @@ export default function (req) {
     /**
      * Render the application.
      */
-    const renderApp = () => {
+    const renderRoot = () => {
       let context = {};
       let html = render(
         <Provider store={store}>
@@ -76,12 +76,17 @@ export default function (req) {
           </IntlProvider>
         </Provider>
       );
-      return {context, html};
+      let state = store.getState();
+      delete state._server_;
+      delete state.router;
+      return {context, html, state};
     };
 
     /**
      * Initial render.
+     * TODO We are rendering twice on the server to trigger all actions and pre-loading exactly like on the client.
+     * TODO This could be reduced to a single render once this is resolved https://github.com/ReactTraining/react-router/issues/4407
      */
-    renderApp();
+    renderRoot();
   });
 }

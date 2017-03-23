@@ -16,7 +16,7 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import {createEpicMiddleware} from 'redux-observable';
 import createHistory from 'history/createBrowserHistory'
 import {ConnectedRouter, routerMiddleware} from 'react-router-redux'
-import {IntlProvider, FormattedMessage} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 
 /**
  * Import local dependencies.
@@ -47,9 +47,9 @@ let store;
 if (process.env.NODE_ENV === 'development') {
   // Development mode with Redux DevTools support enabled.
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // Prevents Redux DevTools from re-dispatching all previous actions.
-      shouldHotReload: false
-    }) : compose;
+    // Prevents Redux DevTools from re-dispatching all previous actions.
+    shouldHotReload: false
+  }) : compose;
   // Create the redux store.
   store = createStore(
     rootReducer,
@@ -57,10 +57,15 @@ if (process.env.NODE_ENV === 'development') {
   );
 } else {
   // Production mode.
-  store = createStore(
+  store = window.__INITIAL_STATE__ ? createStore(
+    rootReducer,
+    window.__INITIAL_STATE__,
+    applyMiddleware(routerMiddleware(history), epicMiddleware)
+  ) : createStore(
     rootReducer,
     applyMiddleware(routerMiddleware(history), epicMiddleware)
   );
+  // TODO delete initial state for garbage collection?
 }
 
 /**
