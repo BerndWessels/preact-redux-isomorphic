@@ -11,6 +11,7 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
+import {FormattedMessage} from 'react-intl';
 
 /**
  * Import local dependencies.
@@ -23,7 +24,18 @@ import Bla from '../bla/component';
 class Home extends Component {
   render(props, state) {
     return (
-      <div><Bla blub="Home">Child</Bla></div>
+      <div>
+        <Bla blub="Home">
+          <FormattedMessage id="welcome"
+                            description="Something or so."
+                            defaultMessage={`Hello {name},
+                            there {unreadCount, plural, one {is} other {are}}
+                            {unreadCount, number} other
+                            {unreadCount, plural, one {company} other {companies}}`}
+                            values={{name: <b>NAME</b>, unreadCount: 5}}
+          />
+        </Bla>
+      </div>
     );
   }
 }

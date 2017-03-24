@@ -16,7 +16,8 @@ import {Provider} from 'preact-redux';
 import {applyMiddleware, createStore} from 'redux';
 import {createEpicMiddleware} from 'redux-observable';
 import {StaticRouter} from 'react-router';
-import {IntlProvider} from 'react-intl';
+import {addLocaleData, IntlProvider} from 'react-intl';
+import {head, split} from 'ramda';
 
 /**
  * Import local dependencies.
@@ -25,6 +26,11 @@ import Root from './component';
 import {rootReducer} from './reducer';
 import rootEpic from './epic';
 import {ROOT_STATE_READY_TO_RENDER} from './actions';
+
+import intlDE from 'react-intl/locale-data/de.js';
+import intlEN from 'react-intl/locale-data/en.js';
+import intlMessagesDE from '../public/assets/translations/de.json';
+import intlMessagesEN from '../public/assets/translations/en.json';
 
 /**
  * Export the promise factory.
@@ -50,6 +56,19 @@ export default function (req) {
     };
 
     /**
+     * Load the locale data for the users language.
+     */
+    // Get the users language.
+    const locale = req.query.language ? head(split('-', req.query.language)) : 'de'; // TODO support en-gb fallback to en?
+    const locales = {
+      de: {data: intlDE, messages: intlMessagesDE},
+      en: {data: intlEN, messages: intlMessagesEN}
+    };
+
+    // Set the locale data.
+    addLocaleData(locales[locale].data);
+
+    /**
      * Create the epic middleware.
      */
     const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -69,7 +88,7 @@ export default function (req) {
       let context = {};
       let html = render(
         <Provider store={store}>
-          <IntlProvider locale="en">
+          <IntlProvider locale={locale} messages={locales[locale].messages}>
             <StaticRouter location={req.url} context={context}>
               <Root/>
             </StaticRouter>

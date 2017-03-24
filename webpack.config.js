@@ -20,6 +20,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 /**
  * Export the build configuration.
@@ -149,11 +150,13 @@ module.exports = function () {
       })
     ].concat(WEB ? [
       // https://github.com/ampedandwired/html-webpack-plugin
-      new HtmlWebpackPlugin({
+      new HtmlWebpackPlugin(Object.assign({
         template: path.resolve(__dirname, './src/index.ejs'),
         inject: false,
         baseurl: '/'
-      })
+      }, !DEV ? {
+        serviceWorker: 'service-worker.js'
+      } : {}))
     ] : [])
       .concat(DEV ? [
         // prints more readable module names in the browser console on HMR updates
@@ -179,6 +182,21 @@ module.exports = function () {
           },
           sourceMap: true
         })
+      ] : [])
+      .concat(!DEV && WEB ? [
+        new SWPrecacheWebpackPlugin(
+          {
+            cacheId: 'my-project-name', // TODO
+            filename: 'service-worker.js',
+            stripPrefix: path.join(__dirname, 'dist/client').replace(/\\/g,"/"),
+            maximumFileSizeToCacheInBytes: 4194304,
+            minify: false,
+            runtimeCaching: [{
+              handler: 'cacheFirst',
+              urlPattern: /[.]mp3$/,
+            }],
+          }
+        )
       ] : []),
     // https://webpack.js.org/configuration/devtool
     devtool: DEV ? 'cheap-module-eval-source-map' : 'source-map',

@@ -14,6 +14,8 @@
  */
 import fs from 'fs';
 import path from 'path';
+import net from 'net';
+import http from 'http';
 import https from 'https';
 import express from 'express';
 import compression from 'compression';
@@ -22,6 +24,35 @@ import compression from 'compression';
  * Import local dependencies.
  */
 import root from './index.server';
+
+/**
+ * Crazy way to redirect http to https.
+ * TODO This is not for production.
+ */
+
+const basePort = process.env.PORT || 8080;
+const redirectPort = basePort + 1;
+const httpsPort = basePort + 2;
+
+function tcpConnection(conn) {
+  conn.once('data', function (buf) {
+    // A TLS handshake record starts with byte 22.
+    const address = (buf[0] === 22) ? httpsPort : redirectPort;
+    const proxy = net.createConnection(address, function () {
+      proxy.write(buf);
+      conn.pipe(proxy).pipe(conn);
+    });
+  });
+}
+
+net.createServer(tcpConnection).listen(basePort);
+http.createServer(httpConnection).listen(redirectPort);
+
+function httpConnection(req, res) {
+  const host = req.headers['host'];
+  res.writeHead(301, { "Location": "https://" + host + req.url });
+  res.end();
+}
 
 /**
  * Read the index.html template.
@@ -80,7 +111,7 @@ const certificate = fs.readFileSync(path.join(__dirname, '../../certificates/loc
 const server = https.createServer({
   key: privateKey,
   cert: certificate
-}, app).listen(process.env.PORT || 8080, () => {
+}, app).listen(httpsPort, () => {
   console.log(`[server] app on https://localhost:${server.address().port} - ${app.settings.env}`)
 });
 
