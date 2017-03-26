@@ -4,7 +4,12 @@
 
 This is an opinionated isomorphic preact and redux starter-kit.
 
-Includes all your favourite libraries but less than `60kB` for the client to load your entire app!
+It includes all your favourite libraries but less than `60kB` for the client to load your entire app!
+
+The goal is to use the same code to achieve
+- a PWA (progressive web app)
+- a SPA (single page application) that can be serverless and hosted on a CDN
+- a SSR (server-side rendered) app with SEO (search engine optimization) support
 
 ### Latest and greatest
 
