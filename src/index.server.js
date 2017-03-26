@@ -12,7 +12,6 @@
  */
 import {h} from 'preact';
 import createRenderer from './preact-dom-renderer';
-import render from 'preact-render-to-string';
 import {Provider} from 'preact-redux';
 import {applyMiddleware, createStore} from 'redux';
 import {createEpicMiddleware} from 'redux-observable';
@@ -46,12 +45,9 @@ export default function (req) {
     /**
      * Injected reducer to process the "ready to render" action.
      */
-    let finalRender = true;
     const serverReducer = (state = {}, action) => {
       console.log('action => ', action);
-      if (action.type === ROOT_STATE_READY_TO_RENDER && finalRender) {
-        finalRender = false;
-        //resolve(renderRoot());
+      if (action.type === ROOT_STATE_READY_TO_RENDER) {
         let state = store.getState();
         delete state._server_;
         delete state.router;
@@ -63,7 +59,6 @@ export default function (req) {
     /**
      * Load the locale data for the users language.
      */
-      // Get the users language.
     const locale = req.query.language ? head(split('-', req.query.language)) : 'de'; // TODO support en-gb fallback to en?
     const locales = {
       de: {data: intlDE, messages: intlMessagesDE},
@@ -87,36 +82,15 @@ export default function (req) {
     );
 
     /**
-     * Render the application.
+     * Now we can run the app on the server.
+     * https://github.com/developit/preact-render-to-string/issues/30#issuecomment-288752733
      */
-    const renderRoot = () => {
-      let context = {};
-      let html = render(
-        <Provider store={store}>
-          <IntlProvider locale={locale} messages={locales[locale].messages}>
-            <StaticRouter location={req.url} context={context}>
-              <Root/>
-            </StaticRouter>
-          </IntlProvider>
-        </Provider>
-      );
-      let state = store.getState();
-      delete state._server_;
-      delete state.router;
-      return {context, html, state};
-    };
-
-    /**
-     * Initial render.
-     * TODO We are rendering twice on the server to trigger all actions and pre-loading exactly like on the client.
-     * TODO This could be reduced to a single render once this is resolved https://github.com/ReactTraining/react-router/issues/4407
-     */
-      //renderRoot();
-
     const renderer = createRenderer();
 
+    // Router context for capturing redirects.
     let context = {};
 
+    // Run the app on the server.
     renderer.render(
       <Provider store={store}>
         <IntlProvider locale={locale} messages={locales[locale].messages}>
