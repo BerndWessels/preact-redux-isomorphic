@@ -56,7 +56,7 @@ module.exports = function () {
         options: {
           plugins: function () {
             return [
-              autoprefixer({browsers: ['last 2 versions']})
+              autoprefixer({browsers: ['last 1 versions']})
             ];
           }
         }
@@ -153,7 +153,9 @@ module.exports = function () {
       new HtmlWebpackPlugin(Object.assign({
         template: path.resolve(__dirname, './src/index.ejs'),
         inject: false,
-        baseurl: '/'
+        baseurl: '/',
+        manifest: 'manifest.json',
+        themeColor: '#333'
       }, !DEV ? {
         serviceWorker: 'service-worker.js'
       } : {}))

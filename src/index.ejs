@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui, shrink-to-fit=no"/>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
   <base href="<%= htmlWebpackPlugin.options.baseurl %>">
   <title><%= htmlWebpackPlugin.options.title %></title>
-  <link rel="apple-touch-icon" sizes="152x152" href="icon-152x152.png"/>
-  <link rel="apple-touch-icon" sizes="120x120" href="icon-120x120.png"/>
-  <link rel="apple-touch-icon" sizes="76x76" href="icon-76x76.png"/>
-  <link rel="apple-touch-icon" href="icon-60x60.png"/>
+  <% if ( htmlWebpackPlugin.options.manifest) { %><link rel="manifest" href="<%= htmlWebpackPlugin.options.manifest %>">
+  <% } %><% if ( htmlWebpackPlugin.options.themeColor) { %>
+  <meta name="theme-color" content="<%= htmlWebpackPlugin.options.themeColor %>">
+  <% } %>
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/apple-touch-icon-152x152.png"/>
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/apple-touch-icon-120x120.png"/>
   <% if (htmlWebpackPlugin.files.favicon) { %><link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon %>">
   <% } %><% for (var css in htmlWebpackPlugin.files.css) { %><link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
   <script type="application/javascript">
@@ -18,5 +23,8 @@
   <% } %><% for (var chunk in htmlWebpackPlugin.files.chunks) { %><script async src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
   <% } %></head>
 <body>
+<noscript style="text-align:center;">
+  <h5>Please <a href="http://enable-javascript.com/" target="_blank">enable javascript</a> and refresh your browser to continue</h5>
+</noscript>
 </body>
 </html>

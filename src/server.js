@@ -88,7 +88,7 @@ app.get('*', (req, res, next) => {
   try {
     root(req).then(({context, html, state}) => {
       res.send(indexHtml
-        .replace(/<body>[\s\S]*<\/body>/m, `<body>${html}</body>`)
+        .replace(/<\/body>/m, `${html}</body>`)
         .replace(/window.__INITIAL_STATE__ = null;/m, `window.__INITIAL_STATE__ = ${JSON.stringify(state)};`)
       );
     });
