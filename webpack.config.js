@@ -30,50 +30,52 @@ module.exports = function () {
   const DEV = process.env.NODE_ENV === 'development';
   const WEB = process.env.TARGET === 'web';
   // Build sass loaders.
-  const sassLoaders = []
-    .concat(DEV ? [
-      {
-        //https://github.com/webpack-contrib/style-loader
-        loader: 'style-loader'
-      }] : [])
-    .concat([
-      {
-        // https://github.com/webpack-contrib/css-loader
-        loader: 'css-loader',
-        options: Object.assign({
+  function getSassLoaders(modules) {
+    return []
+      .concat(DEV ? [
+        {
+          //https://github.com/webpack-contrib/style-loader
+          loader: 'style-loader'
+        }] : [])
+      .concat([
+        {
+          // https://github.com/webpack-contrib/css-loader
+          loader: 'css-loader',
+          options: Object.assign({
+              sourceMap: true,
+              modules: modules,
+              importLoaders: 2
+            },
+            DEV ? {
+              localIdentName: "[path]---[name]---[local]---[hash:base64:5]"
+            } : {}
+          )
+        },
+        {
+          // https://github.com/postcss/postcss-loader
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                autoprefixer({browsers: ['last 1 versions']})
+              ];
+            }
+          }
+        },
+        {
+          // https://github.com/bholloway/resolve-url-loader
+          loader: 'resolve-url-loader'
+        },
+        {
+          // https://github.com/webpack-contrib/sass-loader
+          loader: 'sass-loader',
+          options: {
             sourceMap: true,
-            modules: true,
-            importLoaders: 2
-          },
-          DEV ? {
-            localIdentName: "[path]---[name]---[local]---[hash:base64:5]"
-          } : {}
-        )
-      },
-      {
-        // https://github.com/postcss/postcss-loader
-        loader: 'postcss-loader',
-        options: {
-          plugins: function () {
-            return [
-              autoprefixer({browsers: ['last 1 versions']})
-            ];
+            includePaths: []
           }
         }
-      },
-      {
-        // https://github.com/bholloway/resolve-url-loader
-        loader: 'resolve-url-loader'
-      },
-      {
-        // https://github.com/webpack-contrib/sass-loader
-        loader: 'sass-loader',
-        options: {
-          sourceMap: true,
-          includePaths: []
-        }
-      }
-    ]);
+      ]);
+  }
   // Build and export the build configuration.
   return {
     // https://webpack.js.org/configuration/target
@@ -125,7 +127,15 @@ module.exports = function () {
       }, {
         test: /(\.scss|\.css)$/,
         exclude: [/node_modules/, /normalize.css/, /icomoon/],
-        use: DEV ? sassLoaders : ExtractTextPlugin.extract(sassLoaders)
+        use: DEV ? getSassLoaders(true) : ExtractTextPlugin.extract(getSassLoaders(true))
+      }, {
+        test: /(\.scss|\.css)$/,
+        include: [/node_modules/],
+        use: DEV ? getSassLoaders(false) : ExtractTextPlugin.extract(getSassLoaders(false))
+      },{
+        // https://github.com/webpack/file-loader
+        test: /\.(svg|woff|woff2|ttf|eot)$/,
+        loader: 'file-loader?name=assets/fonts/[name].[hash].[ext]'
       }]
     },
     // https://webpack.js.org/configuration/plugins

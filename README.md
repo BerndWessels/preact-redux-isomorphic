@@ -4,7 +4,8 @@
 
 This is an opinionated isomorphic preact and redux starter-kit.
 
-It includes all your favourite libraries but less than `60kB` for the client to load your entire app!
+It includes all your favourite libraries and can be as little as `24kB` but most likely less than `80kB` for the client to load your entire app!
+It depends on how many of the great stuff you actually need for your app.
 
 The goal is to use the same code to achieve
 - a PWA (progressive web app)
@@ -16,6 +17,8 @@ The goal is to use the same code to achieve
 #### preact v7
 
 `preact` is `react` in only `3kB`
+
+We also added `preact-compat` in case you need it, otherwise just get rid of it.
 
 #### react-router v4
 
@@ -40,7 +43,10 @@ This can replace all the other redux middleware you used so far.
 Internationalization that uses standards and works client and server-side.
 With support for all the stuff you need like genderization, pluralization, date and time.
 
-#### webpack v2
+`Coming soon:`
+There are even some helper scripts to export/import PO files to communicate with your translators.
+
+#### webpack v2 with HMR (hot module replacement)
 
 Obviously the latest and greatest webpack with all the bells and whistles to achieve
 highly optimized builds.
@@ -55,14 +61,34 @@ great.
 
 You can find [all the details here](ttps://github.com/developit/preact-render-to-string/issues/30#issuecomment-288752733).
 
+#### PWA (progressive web app) Service Worker
+
+100/100 Lighthouse rating if you decide to use this repo to build a PWA.
+
+Otherwise just get rid of the service worker at the end of `index.client.js`.
+
+#### preact-mdl v2 + material-design-lite
+
+Isomorphic lightweight material design.
+
+Replace it with your own front-end components if you like. Just make sure they are isomorphic.
+
+#### Normalized GraphQL Entity Redux State
+
+`Coming soon:`
+We love GraphQL. That's why there is an example on how to use it right.
+Basically each query response will be normalized into the redux store.
+
+If you don't like/need it replace it with whatever data fetching technology you like.
+
 ## Getting started
 
 ### Preparations
 
 - Either provide your own ssl certificates of change the code to use http instead of https!
-
+- To get a response from the GraphQL API you need to run your own GraphQL server and adjust the query.
+Otherwise just replace it with your ordinary REST APIs.
 - Fork and clone this repo.
-
 - `npm install`
 
 ### Development
