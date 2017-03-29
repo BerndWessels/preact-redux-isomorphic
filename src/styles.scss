@@ -7,3 +7,42 @@ html, body {
   position: relative;
   width: 100%;
 }
+
+:global {
+  .mdl-layout__drawer {
+    &, & ~ * {
+      transition: all 300ms ease;
+    }
+    &.is-visible ~ * {
+      transform: translateX(240px/2);
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    .mdl-button.menu {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 2;
+    }
+
+    .mdl-navigation__link {
+      em {
+        float: right;
+        font-style: normal;
+        color: #BBB;
+        font-weight: 300;
+      }
+    }
+  }
+  .mdl-layout__header[manual],
+  .mdl-layout__header--manual {
+    .mdl-layout__header-row {
+      & > .mdl-button:first-child,
+      & > .material-icons:first-child {
+        left: -10px;
+        margin-left: -50px;
+      }
+    }
+  }
+}

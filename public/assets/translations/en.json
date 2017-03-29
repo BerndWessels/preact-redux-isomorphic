@@ -1,4 +1,4 @@
 {
-  "welcome": "Hello {name},\n              there {unreadCount, plural, one {is} other {are}}\n              {unreadCount, number} other\n              {unreadCount, plural, one {company} other {companies}}",
-  "hi": "ho"
+  "about": "About",
+  "home": "Home"
 }

@@ -48,7 +48,7 @@
     "ramda": "^0.23.0",
     "react-intl": "^2.0.0",
     "react-router": "^4.0.0",
-    "react-router-redux": "^5.0.0-alpha.3",
+    "react-router-redux": "^5.0.0-alpha.4",
     "redux": "^3.0.0",
     "redux-observable": "^0.14.0",
     "rxjs": "^5.0.0",

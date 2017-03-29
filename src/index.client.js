@@ -44,7 +44,7 @@ const locales = {
   de: {data: intlDE, messages: intlMessagesDE},
   en: {data: intlEN, messages: intlMessagesEN}
 };
-console.log(locale);
+
 // Load the locale data for the users language asynchronously.
 locales[locale].data((localeData) => {
 
@@ -146,7 +146,7 @@ locales[locale].data((localeData) => {
     /**
      * Register the service worker in production.
      */
-    if (process.env.NODE_ENV === 'production') { // TODO disabled this for server testing purposes!
+    if (process.env.NODE_ENV === 'production' && false) { // TODO disabled this for server testing purposes!
       if ('serviceWorker' in navigator) {
         // Your service-worker.js *must* be located at the top-level directory relative to your site.
         // It won't be able to control pages unless it's located at the same level or higher than them.
