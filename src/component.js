@@ -22,6 +22,7 @@ import {Layout} from 'preact-mdl';
 import AppDrawer from './components/app-drawer/component';
 import AppHeader from './components/app-header/component';
 import AppContent from './components/app-content/component';
+import AppFooter from './components/app-footer/component';
 import {fetchGraphQLQueryCreator} from './actions';
 
 /**
@@ -64,10 +65,11 @@ class App extends Component {
   // Render the component.
   render({onNavigate, aTest}, {drawerCollapsed}) {
     return (
-      <Layout fixed-header={true} js={false}>
+      <Layout>
         <AppDrawer collapsed={this.state.drawerCollapsed} onCollapse={this.toggleDrawer} onNavigate={onNavigate}/>
         <AppHeader onExpand={this.toggleDrawer} onNavigate={onNavigate}/>
         <AppContent/>
+        <AppFooter/>
       </Layout>
     );
   }

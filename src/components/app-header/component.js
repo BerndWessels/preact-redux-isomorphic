@@ -25,10 +25,10 @@ import styles from './styles';
 /**
  * Create the component.
  */
-class AppDrawer extends Component {
+class AppHeader extends Component {
   render({onExpand, onNavigate}, state) {
     return (
-      <Layout.Header manual>
+      <Layout.Header manual waterfall scroll>
         <Layout.HeaderRow>
           <Button icon onClick={onExpand}>
             <Icon icon="menu"/>
@@ -51,6 +51,11 @@ class AppDrawer extends Component {
             <Icon icon="notifications" badge={5 || null}/>
           </Button>
         </Layout.HeaderRow>
+        <Layout.HeaderRow>
+          <Button icon>
+            <Icon icon="alarm"/>
+          </Button>
+        </Layout.HeaderRow>
       </Layout.Header>
     );
   }
@@ -59,4 +64,4 @@ class AppDrawer extends Component {
 /**
  * Export the component.
  */
-export default AppDrawer;
+export default AppHeader;
