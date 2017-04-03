@@ -13,77 +13,90 @@
 import {h, Component} from 'preact';
 import {connect} from 'preact-redux';
 import {FormattedMessage} from 'react-intl';
-import {Button, Icon, Card, CardTitle, CardText, CardActions, CardMenu} from 'preact-mdl';
+import {Button, Icon, Card, CardTitle, CardText, CardActions, CardMenu, Grid, Cell} from 'preact-mdl';
+import classnames from 'classnames';
 
 /**
  * Import local dependencies.
  */
 
 /**
+ * Import styles.
+ */
+import styles from './styles';
+
+/**
  * Create the component.
  */
 class Home extends Component {
   render(props, state) {
+    let rootStyles = classnames(styles.root);
     return (
-      <div style={{padding: '10px'}}>
-        <Card style={{width: '512px', margin: 'auto'}}>
-          <CardTitle style={{
-            color: '#fff',
-            height: '176px',
-            background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
-          }}>Welcome</CardTitle>
-          <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Mauris sagittis pellentesque lacus eleifend lacinia...
-          </CardText>
-          <CardActions border>
-            <Button colored>Get Started</Button>
-          </CardActions>
-          <CardMenu style={{color: '#fff'}}>
-            <Button name="share">
-              <Icon icon="notifications"/>
-            </Button>
-          </CardMenu>
-        </Card>
-        <Card shadow={0} style={{width: '512px', margin: 'auto'}}>
-          <CardTitle style={{
-            color: '#fff',
-            height: '176px',
-            background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
-          }}>Welcome</CardTitle>
-          <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Mauris sagittis pellentesque lacus eleifend lacinia...
-          </CardText>
-          <CardActions border>
-            <Button colored>Get Started</Button>
-          </CardActions>
-          <CardMenu style={{color: '#fff'}}>
-            <Button name="share">
-              <Icon icon="notifications"/>
-            </Button>
-          </CardMenu>
-        </Card>
-        <Card shadow={0} style={{width: '512px', margin: 'auto'}}>
-          <CardTitle style={{
-            color: '#fff',
-            height: '176px',
-            background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
-          }}>Welcome</CardTitle>
-          <CardText>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Mauris sagittis pellentesque lacus eleifend lacinia...
-          </CardText>
-          <CardActions border>
-            <Button colored>Get Started</Button>
-          </CardActions>
-          <CardMenu style={{color: '#fff'}}>
-            <Button name="share">
-              <Icon icon="notifications"/>
-            </Button>
-          </CardMenu>
-        </Card>
-      </div>
+      <Grid class={rootStyles}>
+        <Cell class="mdl-cell--4-col">
+          <Card shadow={2}>
+            <CardTitle style={{
+              color: '#fff',
+              height: '176px',
+              background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
+            }}>Welcome</CardTitle>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Mauris sagittis pellentesque lacus eleifend lacinia...
+            </CardText>
+            <CardActions border>
+              <Button colored>Get Started</Button>
+            </CardActions>
+            <CardMenu style={{color: '#fff'}}>
+              <Button name="share">
+                <Icon icon="notifications"/>
+              </Button>
+            </CardMenu>
+          </Card>
+        </Cell>
+        <Cell class="mdl-cell--4-col">
+          <Card shadow={2}>
+            <CardTitle style={{
+              color: '#fff',
+              height: '176px',
+              background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
+            }}>Welcome</CardTitle>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Mauris sagittis pellentesque lacus eleifend lacinia...
+            </CardText>
+            <CardActions border>
+              <Button colored>Get Started</Button>
+            </CardActions>
+            <CardMenu style={{color: '#fff'}}>
+              <Button name="share">
+                <Icon icon="notifications"/>
+              </Button>
+            </CardMenu>
+          </Card>
+        </Cell>
+        <Cell class="mdl-cell--4-col">
+          <Card shadow={2}>
+            <CardTitle style={{
+              color: '#fff',
+              height: '176px',
+              background: 'url(http://www.getmdl.io/assets/demos/welcome_card.jpg) center / cover'
+            }}>Welcome</CardTitle>
+            <CardText>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Mauris sagittis pellentesque lacus eleifend lacinia...
+            </CardText>
+            <CardActions border>
+              <Button colored>Get Started</Button>
+            </CardActions>
+            <CardMenu style={{color: '#fff'}}>
+              <Button name="share">
+                <Icon icon="notifications"/>
+              </Button>
+            </CardMenu>
+          </Card>
+        </Cell>
+      </Grid>
     );
   }
 }
