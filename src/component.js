@@ -65,7 +65,7 @@ class App extends Component {
   // Render the component.
   render({onNavigate, aTest}, {drawerCollapsed}) {
     return (
-      <Layout>
+      <Layout fixed-header>
         <AppDrawer collapsed={this.state.drawerCollapsed} onCollapse={this.toggleDrawer} onNavigate={onNavigate}/>
         <AppHeader onExpand={this.toggleDrawer} onNavigate={onNavigate}/>
         <AppContent/>
