@@ -1,5 +1,6 @@
 var preact = require('preact');
 var undom = require('undom');
+var h = preact.h;
 
 /**
  *	Prototype stateful server renderer.
@@ -21,6 +22,9 @@ module.exports = function createRenderer() {
     },
     html: function() {
       return serializeHtml(root);
+    },
+    tearDown: function() {
+      preact.render(<nothing/>, parent, root).remove();
     }
   };
 }

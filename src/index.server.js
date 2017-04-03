@@ -51,7 +51,9 @@ export default function (req) {
         let state = store.getState();
         delete state._server_;
         delete state.router;
-        resolve({context: context, html: renderer.html(), state});
+        let html = renderer.html();
+        renderer.tearDown();
+        resolve({context, html, state});
       }
       return state;
     };
