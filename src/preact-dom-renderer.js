@@ -1,54 +1,71 @@
-var preact = require('preact');
-var undom = require('undom');
-var h = preact.h;
+import {h, render} from 'preact';
+import undom from 'undom';
 
-/**
- *	Prototype stateful server renderer.
- */
-var doc;
-module.exports = function createRenderer() {
+const VOID_ELEMENTS = [
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+];
+
+const ESC = {
+  '&': 'amp',
+  '<': 'lt',
+  '>': 'gt',
+  '"': 'quot',
+  "'": 'apos',
+};
+
+const enc = s => s.replace(/[&'"<>]/g, a => `&${ESC[a]};`);
+const attr = (a) => {
+  if (a.name === 'class' && a.value === '') {
+    return '';
+  }
+  return ` ${a.name.replace(/^html/, '')}${a.value === 'true' || a.value === '' ? '' : `="${enc(a.value)}"`}`;
+};
+
+const serializeHtml = (el) => {
+  const {nodeType, normalizedNodeName, textContent, attributes, childNodes, innerHTML} = el;
+  if (nodeType === 3) {
+    return enc(textContent);
+  }
+  const start = `<${normalizedNodeName}${attributes.map(attr).join('')}`;
+  if (VOID_ELEMENTS.includes(normalizedNodeName)) {
+    return `${start} />`;
+  }
+  return `${start}>${innerHTML || childNodes.map(serializeHtml).join('')}</${normalizedNodeName}>`;
+};
+
+let doc;
+const preactDomRenderer = () => {
   if (!doc) {
     doc = undom();
     Object.assign(global, doc.defaultView);
   }
 
-  var root, parent = doc.createElement('x-root');
+  let root;
+  const parent = doc.createElement('x-root');
   doc.body.appendChild(parent);
 
-  return {
-    render: function(jsx) {
-      root = preact.render(jsx, parent, root);
-      return this;
+  const renderer = {
+    render: (jsx) => {
+      root = render(jsx, parent, root);
+      return renderer;
     },
-    html: function() {
-      return serializeHtml(root);
-    },
-    tearDown: function() {
-      preact.render(<nothing/>, parent, root).remove();
-    }
+    html: () => serializeHtml(root),
+    tearDown: () => render(<nothing />, parent, root).remove(),
   };
-}
+  return renderer;
+};
 
-function serializeHtml(el) {
-  if (el.nodeType===3) return esc(el.nodeValue);
-  var name = String(el.nodeName).toLowerCase(),
-    str = '<'+name,
-    hasClass = false,
-    c, i;
-  for (i=0; i<el.attributes.length; i++) {
-    let name = el.attributes[i].name;
-    if (name==='class') hasClass = true;
-    str += ' '+name+'="'+esc(el.attributes[i].value)+'"';
-  }
-  if (el.className && !hasClass) str += ' class="'+el.className+'"';
-  str += '>';
-  for (i=0; i<el.childNodes.length; i++) {
-    c = serializeHtml(el.childNodes[i]);
-    if (c) str += c;
-  }
-  return str + '</'+name+'>';
-}
-
-function esc(str) { return String(str).replace(/[&<>"']/g, escMap); }
-function escMap(s) { return '&'+map[s]+';'; }
-var map = {'&':'amp','<':'lt','>':'gt','"':'quot',"'":'apos'};
+export default preactDomRenderer;
