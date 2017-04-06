@@ -20,3 +20,13 @@
 .main {
   flex: 1;
 }
+
+:global(.mdc-toolbar) {
+  button:global(.material-icons) {
+    height: auto !important;
+    width: auto !important;
+    min-width: 24px !important;
+    padding: 0 8px 0 0 !important;
+    color: white !important;
+  }
+}

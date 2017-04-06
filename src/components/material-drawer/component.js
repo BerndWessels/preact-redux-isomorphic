@@ -46,6 +46,7 @@ export default class Drawer extends Component {
     let classes = classnames({
       'mdc-permanent-drawer': permanent,
       'mdc-temporary-drawer': !permanent,
+      'mdc-temporary-drawer--animating': !permanent,
       'mdc-temporary-drawer--open': !permanent && open
     }, className);
     if (permanent) {

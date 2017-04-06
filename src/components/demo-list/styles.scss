@@ -1,0 +1,29 @@
+/**
+ * Bernd Wessels (https://github.com/BerndWessels/)
+ *
+ * Copyright © 2016 Bernd Wessels. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
+.root {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  .hover {
+    :global(.mdc-list-item) {
+      &:hover {
+        background-color: #f8f8f8;
+      }
+    }
+  }
+}
+
+.fileAvatar {
+  background-color: lightgray;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}

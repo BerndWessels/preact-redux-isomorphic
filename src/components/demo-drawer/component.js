@@ -15,10 +15,14 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
+import Button from '../material-button/component';
 import Drawer from '../material-drawer/component';
 import DrawerToolbarSpacer from '../material-drawer-toolbar-spacer/component';
 import DrawerHeader from '../material-drawer-header/component';
 import DrawerContent from '../material-drawer-content/component';
+import FormField from '../material-form-field/component';
+import Checkbox from '../material-checkbox/component';
+import CheckboxLabel from '../material-checkbox-label/component';
 import Toolbar from '../material-toolbar/component';
 import ToolbarRow from '../material-toolbar-row/component';
 import ToolbarSection from '../material-toolbar-section/component';
@@ -47,7 +51,9 @@ class Demo extends Component {
   render(props, {open, permanent}) {
     return (
       <div class={styles.root}>
-        <Drawer permanent={permanent} open={open} class="mdc-typography" onClick={()=>{this.setState({open: false})}}>
+        <Drawer permanent={permanent} open={open} class="mdc-typography" onClick={() => {
+          this.setState({open: false})
+        }}>
           {permanent &&
           <DrawerToolbarSpacer permanent={permanent}/>
           }
@@ -63,6 +69,11 @@ class Demo extends Component {
           <Toolbar>
             <ToolbarRow>
               <ToolbarSection start>
+                {!permanent &&
+                <Button class="material-icons" onClick={() => {
+                  this.setState({open: true})
+                }}>menu</Button>
+                }
                 <ToolbarTitle>Title</ToolbarTitle>
               </ToolbarSection>
               <ToolbarSection end>
@@ -70,7 +81,10 @@ class Demo extends Component {
               </ToolbarSection>
             </ToolbarRow>
           </Toolbar>
-          <div>Content</div>
+          <FormField>
+            <Checkbox id="permanent" onChange={(checked) => this.setState({permanent: checked})}/>
+            <CheckboxLabel for="permanent">Permanent Drawer</CheckboxLabel>
+          </FormField>
         </main>
       </div>
     );

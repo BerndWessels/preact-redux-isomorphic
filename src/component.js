@@ -18,9 +18,11 @@ import {Route} from 'react-router';
 /**
  * Import local dependencies.
  */
+import Demo from './containers/demo/component';
 import DemoButton from './components/demo-button/component';
 import DemoCard from './components/demo-card/component';
 import DemoDrawer from './components/demo-drawer/component';
+import DemoList from './components/demo-list/component';
 import DemoTextField from './components/demo-text-field/component';
 import {fetchGraphQLQueryCreator} from './actions';
 
@@ -56,10 +58,11 @@ class App extends Component {
   render({onNavigate, aTest}, {drawerCollapsed}) {
     return (
       <div class={styles.root}>
-        <Route exact path="/" component={DemoDrawer}/>
+        <Route exact path="/" component={Demo}/>
         <Route path="/button" component={DemoButton}/>
         <Route path="/card" component={DemoCard}/>
         <Route path="/drawer" component={DemoDrawer}/>
+        <Route path="/list" component={DemoList}/>
         <Route path="/text-field" component={DemoTextField}/>
       </div>
     );
