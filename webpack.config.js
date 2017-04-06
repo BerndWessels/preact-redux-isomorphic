@@ -14,6 +14,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -71,7 +72,10 @@ module.exports = function () {
           loader: 'sass-loader',
           options: {
             sourceMap: true,
-            includePaths: []
+            includePaths: ['node_modules', 'node_modules/@material/*']
+              .map((d) => path.join(__dirname, d))
+              .map((g) => glob.sync(g))
+              .reduce((a, c) => a.concat(c), [])
           }
         }
       ]);

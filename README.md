@@ -67,9 +67,9 @@ You can find [all the details here](ttps://github.com/developit/preact-render-to
 
 Otherwise just get rid of the service worker at the end of `index.client.js`.
 
-#### preact-mdl v2 + material-design-lite
+#### preact-mdc (material design components) under construction!
 
-Isomorphic lightweight material design.
+Isomorphic modular native preact lightweight material design. Currently under construction!
 
 Replace it with your own front-end components if you like. Just make sure they are isomorphic.
 

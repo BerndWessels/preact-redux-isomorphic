@@ -6,3 +6,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
+
+.root {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+}

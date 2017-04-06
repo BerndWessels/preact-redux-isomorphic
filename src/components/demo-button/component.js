@@ -11,14 +11,12 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
-import {Layout} from 'preact-mdl';
-import {Route} from 'react-router';
 
 /**
  * Import local dependencies.
  */
-import Home from '../../containers/home/component';
-import About from '../../containers/about/component';
+import Button from '../material-button/component';
+import Fab from '../material-fab/component';
 
 /**
  * Import styles.
@@ -28,13 +26,19 @@ import styles from './styles';
 /**
  * Create the component.
  */
-class Drawer extends Component {
+class Demo extends Component {
+
+  constructor() {
+    super();
+    this.state = {};
+  }
+
   render(props, state) {
     return (
-      <Layout.Content id="content">
-        <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
-      </Layout.Content>
+      <div>
+        <Button dense raised primary onClick={()=>console.log('click')}>Button</Button>
+        <Fab icon="favorite_border"/>
+      </div>
     );
   }
 }
@@ -42,4 +46,4 @@ class Drawer extends Component {
 /**
  * Export the component.
  */
-export default Drawer;
+export default Demo;

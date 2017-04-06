@@ -13,23 +13,20 @@
 import {h, Component} from 'preact';
 import {connect} from 'preact-redux';
 import {push} from 'react-router-redux';
-import './mdl';
-import {Layout} from 'preact-mdl';
+import {Route} from 'react-router';
 
 /**
  * Import local dependencies.
  */
-import AppDrawer from './components/app-drawer/component';
-import AppHeader from './components/app-header/component';
-import AppContent from './components/app-content/component';
-import AppFooter from './components/app-footer/component';
+import DemoButton from './components/demo-button/component';
+import DemoCard from './components/demo-card/component';
+import DemoDrawer from './components/demo-drawer/component';
+import DemoTextField from './components/demo-text-field/component';
 import {fetchGraphQLQueryCreator} from './actions';
 
 /**
  * Import styles.
  */
-import 'material-design-lite/src/material-design-lite.scss';
-import 'material-design-icons/iconfont/material-icons.css';
 import styles from './styles';
 
 /**
@@ -42,9 +39,7 @@ class App extends Component {
    */
   constructor() {
     super();
-    this.state = {
-      drawerCollapsed: true // TODO maybe better in redux state?
-    };
+    this.state = {};
   }
 
   // Called on server and client.
@@ -57,20 +52,16 @@ class App extends Component {
     });
   };
 
-  // Collapse or expand the drawer.
-  toggleDrawer = () => {
-    this.setState({drawerCollapsed: !this.state.drawerCollapsed});
-  };
-
   // Render the component.
   render({onNavigate, aTest}, {drawerCollapsed}) {
     return (
-      <Layout fixed-header>
-        <AppDrawer collapsed={this.state.drawerCollapsed} onCollapse={this.toggleDrawer} onNavigate={onNavigate}/>
-        <AppHeader onExpand={this.toggleDrawer} onNavigate={onNavigate}/>
-        <AppContent/>
-        <AppFooter/>
-      </Layout>
+      <div class={styles.root}>
+        <Route exact path="/" component={DemoDrawer}/>
+        <Route path="/button" component={DemoButton}/>
+        <Route path="/card" component={DemoCard}/>
+        <Route path="/drawer" component={DemoDrawer}/>
+        <Route path="/text-field" component={DemoTextField}/>
+      </div>
     );
   }
 }
