@@ -24,6 +24,8 @@ import DemoCard from './components/demo-card/component';
 import DemoCheckbox from './components/demo-checkbox/component';
 import DemoDrawer from './components/demo-drawer/component';
 import DemoList from './components/demo-list/component';
+import DemoSnackbar from './components/demo-snackbar/component';
+import DemoSwitch from './components/demo-switch/component';
 import DemoTextField from './components/demo-text-field/component';
 import {fetchGraphQLQueryCreator} from './actions';
 
@@ -65,6 +67,8 @@ class App extends Component {
         <Route path="/checkbox" component={DemoCheckbox}/>
         <Route path="/drawer" component={DemoDrawer}/>
         <Route path="/list" component={DemoList}/>
+        <Route path="/snackbar" component={DemoSnackbar}/>
+        <Route path="/switch" component={DemoSwitch}/>
         <Route path="/text-field" component={DemoTextField}/>
       </div>
     );

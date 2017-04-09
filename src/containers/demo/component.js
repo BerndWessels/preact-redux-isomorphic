@@ -50,8 +50,10 @@ class Demo extends Component {
           <ListItem link href="/button" onClick={(e) => onNavigate(e, '/button')}>Button Demo</ListItem>
           <ListItem link href="/card" onClick={(e) => onNavigate(e, '/card')}>Card Demo</ListItem>
           <ListItem link href="/checkbox" onClick={(e) => onNavigate(e, '/checkbox')}>Checkbox / Radio Demo</ListItem>
-          <ListItem link href="/drawer" onClick={(e) => onNavigate(e, '/drawer')}>Drawer Demo</ListItem>
+          <ListItem link href="/drawer" onClick={(e) => onNavigate(e, '/drawer')}>Drawer / Toolbar Demo</ListItem>
           <ListItem link href="/list" onClick={(e) => onNavigate(e, '/list')}>List Demo</ListItem>
+          <ListItem link href="/snackbar" onClick={(e) => onNavigate(e, '/snackbar')}>Snackbar Demo</ListItem>
+          <ListItem link href="/switch" onClick={(e) => onNavigate(e, '/switch')}>Switch Demo</ListItem>
           <ListItem link href="/text-field" onClick={(e) => onNavigate(e, '/text-field')}>Text field Demo</ListItem>
         </List>
       </div>
