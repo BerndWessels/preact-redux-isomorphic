@@ -37,10 +37,14 @@ export default class Snackbar extends Component {
            children,
            active,
            text,
+           multiline,
+           actionOnBottom,
            ...props
          }, state) {
     let classes = classnames('mdc-snackbar', {
-      'mdc-snackbar--active': active
+      'mdc-snackbar--active': active,
+      'mdc-snackbar--multiline': multiline,
+      'mdc-snackbar--action-on-bottom': actionOnBottom,
     }, className);
     return (
       <div {...props} class={classes} aria-live="assertive" aria-atomic="true" aria-hidden={!active}>

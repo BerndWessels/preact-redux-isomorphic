@@ -11,6 +11,7 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
+import classnames from 'classnames/dedupe';
 import MDCRipple from '../material-ripple';
 
 /**
@@ -43,13 +44,10 @@ import '@material/checkbox/mdc-checkbox.scss';
 export default class Checkbox extends Component {
 
   // Initialize local component state.
-  constructor({checked, disabled, indeterminate}) {
-    super({checked, disabled, indeterminate});
-    this.refs = {};
+  constructor(props) {
+    super(props);
     this.state = {
-      checkedInternal: checked || false,
-      disabledInternal: disabled || false,
-      indeterminateInternal: indeterminate || false
+      focused: false
     };
   }
 
@@ -66,47 +64,26 @@ export default class Checkbox extends Component {
     }
   };
 
-  // Here we synchronize the internal state of the UI component based on what the user has specified.
-  componentWillReceiveProps(nextProps) {
-    let {checked, disabled, indeterminate} = this.props;
-    if (nextProps.checked !== checked) {
-      this.setState({checkedInternal: nextProps.checked, indeterminateInternal: false});
-    }
-    if (nextProps.indeterminate !== indeterminate) {
-      this.setState({indeterminateInternal: nextProps.indeterminate});
-    }
-    if (nextProps.disabled !== disabled) {
-      this.setState({disabledInternal: nextProps.disabled});
-    }
-  }
-
-  // Since we cannot set an indeterminate attribute on a native checkbox, we use componentDidUpdate to update
-  // the indeterminate value of the native checkbox whenever a change occurs (as opposed to doing so within
-  // render()).
-  componentDidUpdate() {
-    if (this.refs.nativeCb) {
-      this.refs.nativeCb.indeterminate = this.state.indeterminateInternal;
-    }
-  }
-
-  render({id, labelId, onChange}, {checkedInternal, disabledInternal}) {
-    // Within render, we generate the html needed to render a proper MDC-Web checkbox.
+  render({
+           'class': className,
+           children,
+           disabled,
+           ...props
+         }, {
+           focused
+         }) {
+    let classes = classnames('mdc-checkbox', {
+      'mdc-checkbox--disabled': disabled,
+      'mdc-ripple-upgraded--background-focused': focused
+    }, className);
     return (
-      <div class="mdc-checkbox" ref={e => this.rippleElement = e}>
-        <input id={id}
+      <div class={classes} ref={e => this.rippleElement = e}>
+        <input class="mdc-checkbox__native-control"
                type="checkbox"
-               className="mdc-checkbox__native-control"
-               aria-labelledby={labelId}
-               checked={checkedInternal}
-               disabled={disabledInternal}
-               onChange={evt => {
-                 this.setState({
-                   checkedInternal: this.refs.nativeCb.checked,
-                   indeterminateInternal: false
-                 });
-                 onChange ? onChange(this.refs.nativeCb.checked) : void 0;
-               }}
-               ref={e => this.refs.nativeCb = e}
+               disabled={disabled}
+               {...props}
+               onBlur={() => this.setState({focused: false})}
+               onFocus={() => this.setState({focused: true})}
         />
         <div className="mdc-checkbox__background">
           <svg className="mdc-checkbox__checkmark"

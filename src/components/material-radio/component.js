@@ -33,6 +33,14 @@ import '@material/radio/mdc-radio.scss';
  */
 export default class Radio extends Component {
 
+  // Initialize local component state.
+  constructor(props) {
+    super(props);
+    this.state = {
+      focused: false
+    };
+  }
+
   componentDidMount = () => {
     if (process.env.WEB) {
       this.ripple = new MDCRipple(this.rippleElement);
@@ -51,13 +59,21 @@ export default class Radio extends Component {
            children,
            disabled,
            ...props
-         }, state) {
+         }, {
+           focused
+         }) {
     let classes = classnames('mdc-radio', {
-      'mdc-radio--disabled': disabled
+      'mdc-radio--disabled': disabled,
+      'mdc-ripple-upgraded--background-focused': focused
     }, className);
     return (
       <div class={classes} ref={e => this.rippleElement = e}>
-        <input class="mdc-radio__native-control" type="radio" disabled={disabled} {...props}/>
+        <input class="mdc-radio__native-control"
+               type="radio"
+               disabled={disabled}
+               {...props}
+               onBlur={() => this.setState({focused: false})}
+               onFocus={() => this.setState({focused: true})}/>
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"/>
           <div class="mdc-radio__inner-circle"/>
