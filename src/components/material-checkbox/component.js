@@ -11,6 +11,7 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
+import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -52,6 +53,19 @@ export default class Checkbox extends Component {
     };
   }
 
+  componentDidMount = () => {
+    if (process.env.WEB) {
+      this.ripple = new MDCRipple(this.rippleElement);
+      this.ripple.unbounded = true;
+    }
+  };
+
+  componentDidUnmount = () => {
+    if (process.env.WEB) {
+      this.ripple.destroy();
+    }
+  };
+
   // Here we synchronize the internal state of the UI component based on what the user has specified.
   componentWillReceiveProps(nextProps) {
     let {checked, disabled, indeterminate} = this.props;
@@ -78,7 +92,7 @@ export default class Checkbox extends Component {
   render({id, labelId, onChange}, {checkedInternal, disabledInternal}) {
     // Within render, we generate the html needed to render a proper MDC-Web checkbox.
     return (
-      <div class="mdc-checkbox">
+      <div class="mdc-checkbox" ref={e => this.rippleElement = e}>
         <input id={id}
                type="checkbox"
                className="mdc-checkbox__native-control"

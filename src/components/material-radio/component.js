@@ -21,27 +21,22 @@ import MDCRipple from '../material-ripple';
 /**
  * Import styles.
  */
-import '@material/button/mdc-button.scss';
-import '@material/ripple/mdc-ripple.scss';
+import '@material/radio/mdc-radio.scss';
 
 /**
  * Create the component.
  *
  * static propTypes = {
- * class: PropTypes.string,
- * children: PropTypes.node,
- * compact: PropTypes.bool,
- * primary: PropTypes.bool,
- * accent: PropTypes.bool,
- * raised: PropTypes.bool,
- * dense: PropTypes.bool
+ * }
+ * static defaultProps = {
  * }
  */
-export default class Button extends Component {
+export default class Radio extends Component {
 
   componentDidMount = () => {
     if (process.env.WEB) {
       this.ripple = new MDCRipple(this.rippleElement);
+      this.ripple.unbounded = true;
     }
   };
 
@@ -54,26 +49,20 @@ export default class Button extends Component {
   render({
            'class': className,
            children,
-           compact,
-           primary,
-           accent,
-           raised,
-           dense,
+           disabled,
            ...props
          }, state) {
-
-    const classes = classnames('mdc-button', {
-      'mdc-button--compact': compact,
-      'mdc-button--primary': primary,
-      'mdc-button--accent': accent,
-      'mdc-button--raised': raised,
-      'mdc-button--dense': dense
+    let classes = classnames('mdc-radio', {
+      'mdc-radio--disabled': disabled
     }, className);
-
     return (
-      <button {...props} class={classes} ref={e => this.rippleElement = e}>
-        {children}
-      </button>
+      <div class={classes} ref={e => this.rippleElement = e}>
+        <input class="mdc-radio__native-control" type="radio" disabled={disabled} {...props}/>
+        <div class="mdc-radio__background">
+          <div class="mdc-radio__outer-circle"/>
+          <div class="mdc-radio__inner-circle"/>
+        </div>
+      </div>
     );
   }
 }

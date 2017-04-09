@@ -21,6 +21,7 @@ import {Route} from 'react-router';
 import Demo from './containers/demo/component';
 import DemoButton from './components/demo-button/component';
 import DemoCard from './components/demo-card/component';
+import DemoCheckbox from './components/demo-checkbox/component';
 import DemoDrawer from './components/demo-drawer/component';
 import DemoList from './components/demo-list/component';
 import DemoTextField from './components/demo-text-field/component';
@@ -61,6 +62,7 @@ class App extends Component {
         <Route exact path="/" component={Demo}/>
         <Route path="/button" component={DemoButton}/>
         <Route path="/card" component={DemoCard}/>
+        <Route path="/checkbox" component={DemoCheckbox}/>
         <Route path="/drawer" component={DemoDrawer}/>
         <Route path="/list" component={DemoList}/>
         <Route path="/text-field" component={DemoTextField}/>
