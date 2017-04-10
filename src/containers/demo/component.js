@@ -51,6 +51,7 @@ class Demo extends Component {
           <ListItem link href="/card" onClick={(e) => onNavigate(e, '/card')}>Card Demo</ListItem>
           <ListItem link href="/checkbox" onClick={(e) => onNavigate(e, '/checkbox')}>Checkbox / Radio Demo</ListItem>
           <ListItem link href="/drawer" onClick={(e) => onNavigate(e, '/drawer')}>Drawer / Toolbar Demo</ListItem>
+          <ListItem link href="/icon-toggle" onClick={(e) => onNavigate(e, '/icon-toggle')}>Icon Toggle Demo</ListItem>
           <ListItem link href="/list" onClick={(e) => onNavigate(e, '/list')}>List Demo</ListItem>
           <ListItem link href="/snackbar" onClick={(e) => onNavigate(e, '/snackbar')}>Snackbar Demo</ListItem>
           <ListItem link href="/switch" onClick={(e) => onNavigate(e, '/switch')}>Switch Demo</ListItem>
