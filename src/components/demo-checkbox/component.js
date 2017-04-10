@@ -39,7 +39,7 @@ class Demo extends Component {
     return (
       <div>
         <FormField>
-          <Checkbox onChange={(checked) => this.setState({disabled: checked})}/>
+          <Checkbox onChange={e => this.setState({disabled: e.target.checked})}/>
           <CheckboxLabel>Disabled</CheckboxLabel>
         </FormField>
         <FormField>

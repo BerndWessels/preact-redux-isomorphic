@@ -73,7 +73,7 @@ export default class Checkbox extends Component {
   handleChangeInput = (e) => {
     this.setState({valueInternal: e.target.value, validInternal: e.target.checkValidity()});
     if (this.props.onChange) {
-      this.props.onChange(e.target.value);
+      this.props.onChange(e);
     }
   };
 
@@ -84,8 +84,6 @@ export default class Checkbox extends Component {
            label,
            placeholder,
            disabled,
-           rtl,
-           dark,
            dense,
            required,
            pattern,
@@ -96,8 +94,9 @@ export default class Checkbox extends Component {
            focused,
            valueInternal,
            validInternal
-         }) {
+         }, context) {
     const classes = classnames('mdc-textfield mdc-textfield--upgraded', {
+      'mdc-textfield--dense': dense,
       'mdc-textfield--disabled': disabled,
       'mdc-textfield--focused': focused,
       'mdc-textfield--invalid': !validInternal

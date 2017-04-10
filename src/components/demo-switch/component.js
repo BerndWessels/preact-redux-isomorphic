@@ -38,7 +38,7 @@ class Demo extends Component {
     return (
       <div class={styles.root}>
         <FormField>
-          <Switch id="s1" onChange={(e)=>console.log(e.target.checked)}/>
+          <Switch id="s1" onChange={e => console.log(e.target.checked)}/>
           <CheckboxLabel for="s1">Switch me</CheckboxLabel>
         </FormField>
         <FormField>

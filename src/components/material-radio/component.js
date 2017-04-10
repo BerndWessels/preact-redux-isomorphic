@@ -12,7 +12,6 @@
  */
 import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
-import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
@@ -22,6 +21,7 @@ import MDCRipple from '../material-ripple';
  * Import styles.
  */
 import '@material/radio/mdc-radio.scss';
+import '@material/ripple/mdc-ripple.scss';
 
 /**
  * Create the component.
@@ -37,43 +37,59 @@ export default class Radio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      focused: false
+      focus: false,
+      ripple: false
     };
   }
 
-  componentDidMount = () => {
-    if (process.env.WEB) {
-      this.ripple = new MDCRipple(this.rippleElement);
-      this.ripple.unbounded = true;
-    }
+  handleFocus = (e) => {
+    this.setState({focus: true});
+    this.props.onFocus && this.props.onFocus(e);
   };
 
-  componentDidUnmount = () => {
-    if (process.env.WEB) {
-      this.ripple.destroy();
-    }
+  handleBlur = (e) => {
+    this.setState({focus: false});
+    this.props.onBlur && this.props.onBlur(e);
+  };
+
+  handleChange = (e) => {
+    this.setState({ripple: true});
+    setTimeout(() => {
+      this.setState({ripple: false});
+    }, 300);
+    this.props.onChange && this.props.onChange(e);
   };
 
   render({
            'class': className,
            children,
            disabled,
+           onFocus,
+           onBlur,
+           onChange,
            ...props
          }, {
-           focused
-         }) {
-    let classes = classnames('mdc-radio', {
+           focus,
+           ripple
+         }, context) {
+    let classes = classnames('mdc-radio mdc-ripple-upgraded mdc-ripple-upgraded--unbounded', {
       'mdc-radio--disabled': disabled,
-      'mdc-ripple-upgraded--background-focused': focused
+      'mdc-ripple-upgraded--background-active-fill': ripple,
+      'mdc-ripple-upgraded--foreground-activation': ripple,
+      'mdc-ripple-upgraded--foreground-deactivation': !ripple,
+      'mdc-ripple-upgraded--background-focused': focus
     }, className);
     return (
-      <div class={classes} ref={e => this.rippleElement = e}>
+      <div class={classes}
+           style="--mdc-ripple-surface-width:40px; --mdc-ripple-surface-height:40px; --mdc-ripple-fg-size:24px; --mdc-ripple-fg-scale:2.77369; --mdc-ripple-left:8px; --mdc-ripple-top:8px;">
         <input class="mdc-radio__native-control"
                type="radio"
                disabled={disabled}
+               onFocus={this.handleFocus}
+               onChange={this.handleChange}
+               onBlur={this.handleBlur}
                {...props}
-               onBlur={() => this.setState({focused: false})}
-               onFocus={() => this.setState({focused: true})}/>
+        />
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"/>
           <div class="mdc-radio__inner-circle"/>
