@@ -1,6 +1,6 @@
 {
   "name": "preact-redux-isomorphic",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -52,6 +52,7 @@
     "react-router-redux": "^5.0.0-alpha.4",
     "redux": "^3.0.0",
     "redux-observable": "^0.14.0",
+    "roboto-fontface": "^0.7.0",
     "rxjs": "^5.0.0",
     "undom": "^0.3.0",
     "xhr2": "^0.1.0"

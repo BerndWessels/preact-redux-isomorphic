@@ -56,6 +56,7 @@ class Demo extends Component {
           <ListItem link href="/snackbar" onClick={(e) => onNavigate(e, '/snackbar')}>Snackbar Demo</ListItem>
           <ListItem link href="/switch" onClick={(e) => onNavigate(e, '/switch')}>Switch Demo</ListItem>
           <ListItem link href="/text-field" onClick={(e) => onNavigate(e, '/text-field')}>Text field Demo</ListItem>
+          <ListItem link href="/theme" onClick={(e) => onNavigate(e, '/theme')}>Theme Demo</ListItem>
         </List>
       </div>
     );

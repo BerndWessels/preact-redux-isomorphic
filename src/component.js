@@ -28,11 +28,13 @@ import DemoList from './components/demo-list/component';
 import DemoSnackbar from './components/demo-snackbar/component';
 import DemoSwitch from './components/demo-switch/component';
 import DemoTextField from './components/demo-text-field/component';
+import DemoTheme from './components/demo-theme/component';
 import {fetchGraphQLQueryCreator} from './actions';
 
 /**
  * Import styles.
  */
+import 'roboto-fontface/css/roboto/sass/roboto-fontface-regular.scss';
 import styles from './styles';
 
 /**
@@ -72,6 +74,7 @@ class App extends Component {
         <Route path="/snackbar" component={DemoSnackbar}/>
         <Route path="/switch" component={DemoSwitch}/>
         <Route path="/text-field" component={DemoTextField}/>
+        <Route path="/theme" component={DemoTheme}/>
       </div>
     );
   }
