@@ -15,16 +15,16 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
-import Card from '../material-card/component';
-import CardPrimary from '../material-card-primary/component';
-import CardTitle from '../material-card-title/component';
-import CardSubTitle from '../material-card-subtitle/component';
-import CardSupportingText from '../material-card-supporting-text/component';
-import CardActions from '../material-card-actions/component';
-import CardAction from '../material-card-action/component';
-import CardMedia from '../material-card-media/component';
-import CardMediaItem from '../material-card-media-item/component';
-import CardHorizontalBlock from '../material-card-horizontal-block/component';
+import Card from 'preact-mdc/material-card';
+import CardPrimary from 'preact-mdc/material-card-primary';
+import CardTitle from 'preact-mdc/material-card-title';
+import CardSubTitle from 'preact-mdc/material-card-subtitle';
+import CardSupportingText from 'preact-mdc/material-card-supporting-text';
+import CardActions from 'preact-mdc/material-card-actions';
+import CardAction from 'preact-mdc/material-card-action';
+import CardMedia from 'preact-mdc/material-card-media';
+import CardMediaItem from 'preact-mdc/material-card-media-item';
+import CardHorizontalBlock from 'preact-mdc/material-card-horizontal-block';
 
 /**
  * Import styles.

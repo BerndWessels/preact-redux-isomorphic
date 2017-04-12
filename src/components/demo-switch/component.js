@@ -15,9 +15,9 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
-import CheckboxLabel from '../material-checkbox-label/component';
-import FormField from '../material-form-field/component';
-import Switch from '../material-switch/component';
+import CheckboxLabel from 'preact-mdc/material-checkbox-label';
+import FormField from 'preact-mdc/material-form-field';
+import Switch from 'preact-mdc/material-switch';
 
 /**
  * Import styles.

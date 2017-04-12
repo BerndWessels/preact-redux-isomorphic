@@ -15,10 +15,10 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
-import Checkbox from '../material-checkbox/component';
-import CheckboxLabel from '../material-checkbox-label/component';
-import FormField from '../material-form-field/component';
-import Radio from '../material-radio/component';
+import Checkbox from 'preact-mdc/material-checkbox';
+import CheckboxLabel from 'preact-mdc/material-checkbox-label';
+import FormField from 'preact-mdc/material-form-field';
+import Radio from 'preact-mdc/material-radio';
 
 /**
  * Import styles.

@@ -15,18 +15,18 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
-import Button from '../material-button/component';
-import Drawer from '../material-drawer/component';
-import DrawerToolbarSpacer from '../material-drawer-toolbar-spacer/component';
-import DrawerHeader from '../material-drawer-header/component';
-import DrawerContent from '../material-drawer-content/component';
-import FormField from '../material-form-field/component';
-import Checkbox from '../material-checkbox/component';
-import CheckboxLabel from '../material-checkbox-label/component';
-import Toolbar from '../material-toolbar/component';
-import ToolbarRow from '../material-toolbar-row/component';
-import ToolbarSection from '../material-toolbar-section/component';
-import ToolbarTitle from '../material-toolbar-title/component';
+import Button from 'preact-mdc/material-button';
+import Drawer from 'preact-mdc/material-drawer';
+import DrawerToolbarSpacer from 'preact-mdc/material-drawer-toolbar-spacer';
+import DrawerHeader from 'preact-mdc/material-drawer-header';
+import DrawerContent from 'preact-mdc/material-drawer-content';
+import FormField from 'preact-mdc/material-form-field';
+import Checkbox from 'preact-mdc/material-checkbox';
+import CheckboxLabel from 'preact-mdc/material-checkbox-label';
+import Toolbar from 'preact-mdc/material-toolbar';
+import ToolbarRow from 'preact-mdc/material-toolbar-row';
+import ToolbarSection from 'preact-mdc/material-toolbar-section';
+import ToolbarTitle from 'preact-mdc/material-toolbar-title';
 
 /**
  * Import styles.
@@ -82,7 +82,7 @@ class Demo extends Component {
             </ToolbarRow>
           </Toolbar>
           <FormField>
-            <Checkbox id="permanent" onChange={e => this.setState({permanent: e.target.checked})}/>
+            <Checkbox id="permanent" defaultValue={permanent} onChange={e => this.setState({permanent: e.target.checked})}/>
             <CheckboxLabel for="permanent">Permanent Drawer</CheckboxLabel>
           </FormField>
         </main>

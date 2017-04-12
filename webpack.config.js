@@ -80,6 +80,7 @@ module.exports = function () {
         }
       ]);
   }
+
   // Build and export the build configuration.
   return {
     // https://webpack.js.org/configuration/target
@@ -113,7 +114,7 @@ module.exports = function () {
       noParse: /\.min\.js/,
       rules: [{
         test: /\.jsx?$/,
-        exclude: [/node_modules/],
+        exclude: [/node_modules(?![\/\\]preact-mdc)/],
         use: [{
           // https://github.com/babel/babel-loader
           loader: 'babel-loader',
@@ -136,7 +137,7 @@ module.exports = function () {
         test: /(\.scss|\.css)$/,
         include: [/node_modules/],
         use: DEV ? getSassLoaders(false) : ExtractTextPlugin.extract(getSassLoaders(false))
-      },{
+      }, {
         // https://github.com/webpack/file-loader
         test: /\.(svg|woff|woff2|ttf|eot)$/,
         loader: 'file-loader?name=assets/fonts/[name].[hash].[ext]'
@@ -204,7 +205,7 @@ module.exports = function () {
           {
             cacheId: 'my-project-name', // TODO
             filename: 'service-worker.js',
-            stripPrefix: path.join(__dirname, 'dist/client').replace(/\\/g,"/"),
+            stripPrefix: path.join(__dirname, 'dist/client').replace(/\\/g, "/"),
             maximumFileSizeToCacheInBytes: 4194304,
             minify: false,
             runtimeCaching: [{

@@ -18,16 +18,8 @@ import {push} from 'react-router-redux';
 /**
  * Import local dependencies.
  */
-import List from '../../components/material-list/component';
-import ListDivider from '../../components/material-list-divider/component';
-import ListGroup from '../../components/material-list-group/component';
-import ListGroupDivider from '../../components/material-list-group-divider/component';
-import ListGroupHeader from '../../components/material-list-group-header/component';
-import ListItem from '../../components/material-list-item/component';
-import ListItemDetail from '../../components/material-list-item-detail/component';
-import ListItemText from '../../components/material-list-item-text/component';
-import ListItemTextPrimary from '../../components/material-list-item-text-primary/component';
-import ListItemTextSecondary from '../../components/material-list-item-text-secondary/component';
+import List from 'preact-mdc/material-list';
+import ListItem from 'preact-mdc/material-list-item';
 
 /**
  * Import styles.
@@ -45,7 +37,6 @@ class Demo extends Component {
     return (
       <div class={classes}>
         <h1>Preact Material Design Components Web (preact-mdc)</h1>
-        <h4>All these components will be moved into the preact-mdc repo once they are complete.</h4>
         <List links>
           <ListItem link href="/button" onClick={(e) => onNavigate(e, '/button')}>Button Demo</ListItem>
           <ListItem link href="/card" onClick={(e) => onNavigate(e, '/card')}>Card Demo</ListItem>

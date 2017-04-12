@@ -11,19 +11,15 @@
  * Import dependencies.
  */
 import {h, Component} from 'preact';
-import classnames from 'classnames/dedupe';
-import MDCRipple from '../material-ripple';
 
 /**
  * Import local dependencies.
  */
-import IconToggle from '../material-icon-toggle/component';
+import IconToggle from 'preact-mdc/material-icon-toggle';
 
 /**
  * Import styles.
  */
-import '@material/icon-toggle/mdc-icon-toggle.scss';
-import '@material/ripple/mdc-ripple.scss';
 import styles from './styles';
 
 /**

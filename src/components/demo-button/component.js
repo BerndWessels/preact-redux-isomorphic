@@ -15,8 +15,8 @@ import {h, Component} from 'preact';
 /**
  * Import local dependencies.
  */
-import Button from '../material-button/component';
-import Fab from '../material-fab/component';
+import Button from 'preact-mdc/material-button';
+import Fab from 'preact-mdc/material-fab';
 
 /**
  * Import styles.

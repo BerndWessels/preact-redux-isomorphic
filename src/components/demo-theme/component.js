@@ -16,7 +16,7 @@ import classnames from 'classnames/dedupe';
 /**
  * Import local dependencies.
  */
-import Button from '../material-button/component';
+import Button from 'preact-mdc/material-button';
 
 /**
  * Import styles.

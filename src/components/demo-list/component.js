@@ -16,16 +16,16 @@ import classnames from 'classnames/dedupe';
 /**
  * Import local dependencies.
  */
-import List from '../material-list/component';
-import ListDivider from '../material-list-divider/component';
-import ListGroup from '../material-list-group/component';
-import ListGroupDivider from '../material-list-group-divider/component';
-import ListGroupHeader from '../material-list-group-header/component';
-import ListItem from '../material-list-item/component';
-import ListItemDetail from '../material-list-item-detail/component';
-import ListItemText from '../material-list-item-text/component';
-import ListItemTextPrimary from '../material-list-item-text-primary/component';
-import ListItemTextSecondary from '../material-list-item-text-secondary/component';
+import List from 'preact-mdc/material-list';
+import ListDivider from 'preact-mdc/material-list-divider';
+import ListGroup from 'preact-mdc/material-list-group';
+import ListGroupDivider from 'preact-mdc/material-list-group-divider';
+import ListGroupHeader from 'preact-mdc/material-list-group-header';
+import ListItem from 'preact-mdc/material-list-item';
+import ListItemDetail from 'preact-mdc/material-list-item-detail';
+import ListItemText from 'preact-mdc/material-list-item-text';
+import ListItemTextPrimary from 'preact-mdc/material-list-item-text-primary';
+import ListItemTextSecondary from 'preact-mdc/material-list-item-text-secondary';
 
 /**
  * Import styles.
