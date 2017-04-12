@@ -27,6 +27,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
  * Export the build configuration.
  */
 module.exports = function () {
+  const baseurl = '/'; // /preact-redux-isomorphic/
   // Get the build environment.
   const DEV = process.env.NODE_ENV === 'development';
   const WEB = process.env.TARGET === 'web';
@@ -160,7 +161,8 @@ module.exports = function () {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(DEV ? 'development' : 'production'),
-          WEB: JSON.stringify(WEB)
+          WEB: JSON.stringify(WEB),
+          BASE_URL: JSON.stringify(baseurl)
         }
       })
     ].concat(WEB ? [
@@ -168,7 +170,7 @@ module.exports = function () {
       new HtmlWebpackPlugin(Object.assign({
         template: path.resolve(__dirname, './src/index.ejs'),
         inject: false,
-        baseurl: '/',
+        baseurl: baseurl,
         manifest: 'manifest.json',
         themeColor: '#333'
       }, !DEV ? {

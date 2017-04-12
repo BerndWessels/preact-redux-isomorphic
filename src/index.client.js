@@ -57,7 +57,9 @@ locales[locale].data((localeData) => {
     /**
      * Create the browser history access.
      */
-    const history = createHistory();
+    const history = createHistory({
+      basename: process.env.BASE_URL
+    });
 
     /**
      * Create the epic middleware.
