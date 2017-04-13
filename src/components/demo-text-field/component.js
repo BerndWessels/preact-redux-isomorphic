@@ -49,41 +49,61 @@ class Demo extends Component {
     };
   }
 
-  render(props, {rtl, ...state}) {
+  render(props, {
+           disabled,
+           rtl,
+           dense,
+           required,
+           helpText,
+           helpTextPersistent,
+           helpTextValidation,
+           ...state
+         }, context) {
     return (
       <div>
         <Button dense raised primary onClick={e => this.setState({value: new Date().toLocaleTimeString()})}>Set
           Value</Button>
         <FormField>
-          <Checkbox onChange={e => this.setState({disabled: e.target.checked})}/>
-          <CheckboxLabel>Disabled</CheckboxLabel>
+          <Checkbox id="c1" checked={disabled} onChange={e => this.setState({disabled: e.target.checked})}/>
+          <CheckboxLabel for="c1">Disabled</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({rtl: e.target.checked})}/>
-          <CheckboxLabel>RTL</CheckboxLabel>
+          <Checkbox id="c2" checked={rtl} onChange={e => this.setState({rtl: e.target.checked})}/>
+          <CheckboxLabel for="c2">RTL</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({dense: e.target.checked})}/>
-          <CheckboxLabel>Dense</CheckboxLabel>
+          <Checkbox id="c3" checked={dense} onChange={e => this.setState({dense: e.target.checked})}/>
+          <CheckboxLabel for="c3">Dense</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({required: e.target.checked})}/>
-          <CheckboxLabel>Required</CheckboxLabel>
+          <Checkbox id="c4" checked={required} onChange={e => this.setState({required: e.target.checked})}/>
+          <CheckboxLabel for="c4">Required</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({helpText: e.target.checked ? 'Helptext' : null})}/>
-          <CheckboxLabel>Help Text</CheckboxLabel>
+          <Checkbox id="c5" checked={helpText !== null}
+                    onChange={e => this.setState({helpText: e.target.checked ? 'Helptext' : null})}/>
+          <CheckboxLabel for="c5">Help Text</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({helpTextPersistent: e.target.checked})}/>
-          <CheckboxLabel>Help Text Persistent</CheckboxLabel>
+          <Checkbox id="c6" checked={helpTextPersistent}
+                    onChange={e => this.setState({helpTextPersistent: e.target.checked})}/>
+          <CheckboxLabel for="c6">Help Text Persistent</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox onChange={e => this.setState({helpTextValidation: e.target.checked})}/>
-          <CheckboxLabel>Help Text Validation</CheckboxLabel>
+          <Checkbox id="c7" checked={helpTextValidation}
+                    onChange={e => this.setState({helpTextValidation: e.target.checked})}/>
+          <CheckboxLabel for="c7">Help Text Validation</CheckboxLabel>
         </FormField>
         <section dir={rtl ? 'rtl' : false}>
-          <TextField {...state} onChange={e => this.setState({value: e.target.value})}/>
+          <TextField disabled={disabled}
+                     rtl={rtl}
+                     dense={dense}
+                     required={required}
+                     helpText={helpText}
+                     helpTextPersistent={helpTextPersistent}
+                     helpTextValidation={helpTextValidation}
+                     {...state}
+                     onChange={e => this.setState({value: e.target.value})}/>
         </section>
       </div>
     );

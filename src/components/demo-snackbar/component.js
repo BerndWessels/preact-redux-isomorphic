@@ -47,16 +47,16 @@ class Demo extends Component {
     }, 2000);
   };
 
-  render(props, {active, multiline, actionOnBottom}) {
+  render(props, {active, multiline, actionOnBottom}, context) {
     return (
       <div class={styles.root}>
         <Button primary raised onClick={this.handleClick}>Snackbar</Button>
         <FormField>
-          <Checkbox id="c1" onChange={e => this.setState({multiline: e.target.checked})}/>
+          <Checkbox id="c1" checked={multiline} onChange={e => this.setState({multiline: e.target.checked})}/>
           <CheckboxLabel for="c1">Multiline</CheckboxLabel>
         </FormField>
         <FormField>
-          <Checkbox id="c2" onChange={e => this.setState({actionOnBottom: e.target.checked})}/>
+          <Checkbox id="c2" checked={actionOnBottom} onChange={e => this.setState({actionOnBottom: e.target.checked})}/>
           <CheckboxLabel for="c2">Action on bottom</CheckboxLabel>
         </FormField>
         <Snackbar text="A notification" active={active} multiline={multiline} actionOnBottom={actionOnBottom}>

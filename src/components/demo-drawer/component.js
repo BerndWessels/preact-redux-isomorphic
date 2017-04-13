@@ -82,7 +82,7 @@ class Demo extends Component {
             </ToolbarRow>
           </Toolbar>
           <FormField>
-            <Checkbox id="permanent" defaultValue={permanent} onChange={e => this.setState({permanent: e.target.checked})}/>
+            <Checkbox id="permanent" checked={permanent} onChange={e => this.setState({permanent: e.target.checked})}/>
             <CheckboxLabel for="permanent">Permanent Drawer</CheckboxLabel>
           </FormField>
         </main>

@@ -39,20 +39,20 @@ class Demo extends Component {
     return (
       <div>
         <FormField>
-          <Checkbox onChange={e => this.setState({disabled: e.target.checked})}/>
-          <CheckboxLabel>Disabled</CheckboxLabel>
+          <Checkbox id="c1"/>
+          <CheckboxLabel for="c1">Disabled</CheckboxLabel>
         </FormField>
         <FormField>
-          <Radio name="group1"/>
-          <CheckboxLabel>Radio 1</CheckboxLabel>
+          <Radio name="group1" id="r1"/>
+          <CheckboxLabel for="r1">Radio 1</CheckboxLabel>
         </FormField>
         <FormField>
-          <Radio name="group1"/>
-          <CheckboxLabel>Radio 2</CheckboxLabel>
+          <Radio name="group1" id="r2"/>
+          <CheckboxLabel for="r2">Radio 2</CheckboxLabel>
         </FormField>
         <FormField>
-          <Radio name="group1"/>
-          <CheckboxLabel>Radio 3</CheckboxLabel>
+          <Radio name="group1" id="r3"/>
+          <CheckboxLabel for="r3">Radio 3</CheckboxLabel>
         </FormField>
       </div>
     );
