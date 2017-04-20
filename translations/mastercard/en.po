@@ -1,0 +1,6 @@
+# This is an example comment that would come from the translator.
+#. This is the title of the demo page.
+#: containers\demo\component.json
+msgctxt "demoTitle"
+msgid "Preact Material Design Components Web (preact-mdc)"
+msgstr "Preact Material Design Components Web (preact-mdc) [mastercard/en]"

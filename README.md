@@ -43,8 +43,26 @@ This can replace all the other redux middleware you used so far.
 Internationalization that uses standards and works client and server-side.
 With support for all the stuff you need like genderization, pluralization, date and time.
 
-`Coming soon:`
 There are even some helper scripts to export/import PO files to communicate with your translators.
+
+##### `npm run po:export`
+
+This will extract all translations from your code and merge them into PO files.
+It will NOT override already existing translations but only add new translations to the PO files.
+You then send the PO files to your translator and he will use his tools to only translate the new untranslated translations.
+
+##### `npm run po:import visa`
+
+This will import all translations from the PO files within the given whitelabel.
+You do this after you received all translations back from the translator and before you build.
+
+##### Whitelabel
+
+If you are building just for your own company, then just have only a single whitelabel and that's totally fine.
+
+But we also want to enable you to build for multiple whitelabels.
+This allows you to have different translations for different whitelabels.
+It is a very common thing in enterprise applications and translations really differ between whitelabels (believe me).
 
 #### webpack v2 with HMR (hot module replacement)
 

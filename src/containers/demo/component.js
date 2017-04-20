@@ -14,6 +14,7 @@ import {h, Component} from 'preact';
 import classnames from 'classnames/dedupe';
 import {connect} from 'preact-redux';
 import {push} from 'react-router-redux';
+import {FormattedMessage} from 'react-intl';
 
 /**
  * Import local dependencies.
@@ -36,7 +37,11 @@ class Demo extends Component {
     let classes = classnames(styles.root, 'mdc-typography');
     return (
       <div class={classes}>
-        <h1>Preact Material Design Components Web (preact-mdc)</h1>
+        <h1>
+          <FormattedMessage id="demoTitle"
+                            description="This is the title of the demo page."
+                            defaultMessage={`Preact Material Design Components Web (preact-mdc)`}/>
+        </h1>
         <List links>
           <ListItem link href="/button" onClick={(e) => onNavigate(e, '/button')}>Button Demo</ListItem>
           <ListItem link href="/card" onClick={(e) => onNavigate(e, '/card')}>Card Demo</ListItem>
