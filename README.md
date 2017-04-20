@@ -109,15 +109,43 @@ Otherwise just replace it with your ordinary REST APIs.
 - Fork and clone this repo.
 - `npm install`
 
+#### npm run-commands in `package.json`
+
+You might want to change the following parameters within the dev and build run-commands:
+
+- `BASEURL` will be injected into the `index.html` and the `router history`
+- `PORT` is the port to be used by the  development server
+- `HOST` is the host to be used by the  development server
+
+```js
+"build:client": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=web BASEURL=/ webpack",
+"build:server": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=node BASEURL=/ webpack",
+"dev": "cross-env NODE_ENV=development TARGET=web BASEURL=/ PORT=8080 HOST=localhost webpack-dev-server --inline --hot --progress",
+"dev:secure": "cross-env NODE_ENV=development TARGET=web BASEURL=/ PORT=8080 HOST=my-domain.com webpack-dev-server --inline --hot --progress --https",
+```
+
+#### SSL
+
+You can run development with `http` or `https`. Production is served only with `https`.
+
+To do so you have to provide your own SSL certificates as `certificates/domain.key` and `certificates/domain.cert`.
+
+Make sure you don't check those in to GIT!!!
+
 ### Development
 
-`npm run dev`
+`npm run dev` runs the development version via `http`
+
+`npm run dev:secure` runs the development version via `https` in which case you have to provide
+ your own ssl certificate in the `certificates` folder.
 
 ### Production
 
 `npm run build`
 
 `node dist/server/main`
+
+This serves via https and requires you to provide your own certificates since it is intended to be for production.
 
 # Contributing
 

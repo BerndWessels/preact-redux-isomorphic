@@ -22,15 +22,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const contains = require('ramda/src/contains');
 
 /**
  * Export the build configuration.
  */
 module.exports = function () {
-  const baseurl = '/'; // /preact-redux-isomorphic/
   // Get the build environment.
   const DEV = process.env.NODE_ENV === 'development';
   const WEB = process.env.TARGET === 'web';
+  const BASEURL = process.env.BASEURL;
+  const HTTPS = contains('--https', process.argv);
   // Build sass loaders.
   function getSassLoaders(modules) {
     return []
@@ -162,7 +164,7 @@ module.exports = function () {
         'process.env': {
           NODE_ENV: JSON.stringify(DEV ? 'development' : 'production'),
           WEB: JSON.stringify(WEB),
-          BASE_URL: JSON.stringify(baseurl)
+          BASE_URL: JSON.stringify(BASEURL)
         }
       })
     ].concat(WEB ? [
@@ -170,7 +172,7 @@ module.exports = function () {
       new HtmlWebpackPlugin(Object.assign({
         template: path.resolve(__dirname, './src/index.ejs'),
         inject: false,
-        baseurl: baseurl,
+        baseurl: BASEURL,
         manifest: 'manifest.json',
         themeColor: '#333'
       }, !DEV ? {
@@ -226,14 +228,20 @@ module.exports = function () {
       colors: true
     },
     // https://webpack.js.org/configuration/dev-server
-    devServer: {
-      port: process.env.PORT || 8080,
-      host: 'frae-local.fraedom-dev.com',
+    devServer: HTTPS ? {
+      port: process.env.PORT,
+      host: process.env.HOST,
       publicPath: '/',
       contentBase: './src',
       historyApiFallback: true,
-      key: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, './certificates/localhost.crt'))
+      key: fs.readFileSync(path.resolve(__dirname, './certificates/domain.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, './certificates/domain.crt'))
+    } : {
+      port: process.env.PORT,
+      host: process.env.HOST,
+      publicPath: '/',
+      contentBase: './src',
+      historyApiFallback: true
     }
   };
 };

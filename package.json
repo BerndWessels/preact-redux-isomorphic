@@ -1,18 +1,19 @@
 {
   "name": "preact-redux-isomorphic",
   "version": "0.4.0",
-  "description": "",
+  "description": "preact-redux-isomorphic",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:client": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=web webpack",
-    "build:server": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=node webpack",
+    "build:client": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=web BASEURL=/ webpack",
+    "build:server": "cross-env NODE_ENV=production BABEL_ENV=production TARGET=node BASEURL=/ webpack",
     "build": "npm run build:client & npm run build:server",
-    "dev": "cross-env NODE_ENV=development TARGET=web webpack-dev-server --inline --hot --progress --https",
+    "dev": "cross-env NODE_ENV=development TARGET=web BASEURL=/ PORT=8080 HOST=localhost webpack-dev-server --inline --hot --progress",
+    "dev:secure": "cross-env NODE_ENV=development TARGET=web BASEURL=/ PORT=8080 HOST=frae-local.fraedom-dev.com webpack-dev-server --inline --hot --progress --https",
     "po:export": "node ./scripts/intl export",
     "po:import": "node ./scripts/intl import"
   },
-  "author": "",
+  "author": "Bernd Wessels",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.0.0",
