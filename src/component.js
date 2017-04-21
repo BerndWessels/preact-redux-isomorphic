@@ -96,7 +96,20 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onNavigate: (path) => dispatch(push(path)),
-    onReady: () => dispatch(fetchGraphQLQueryCreator({query: `{ report(id: 4711) { name } }`})
+    onReady: () => dispatch(fetchGraphQLQueryCreator({
+        query: `{
+          Fake {
+            _id
+            firstName
+            lastName
+            Address {
+              country
+              countryCode
+            }
+          }
+        }
+      `
+      })
     )
   }
 };

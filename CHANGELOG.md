@@ -8,3 +8,6 @@
 - https://github.com/developit/preact-compat/issues/358#issuecomment-294604085
 ### Version 0.4.0
 - Added PO translation file import and export feature with whitelabel support
+### Version 0.5.0
+- Added GraphQL entity generator scripts and example implementation
+- Example GraphQL server currently not responding to calls from epic because of CORS issue - will be resolved soon, or replace with your own!

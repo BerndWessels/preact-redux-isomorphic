@@ -35,10 +35,9 @@ import {
   fetchGraphQLQueryPendingCreator,
   rootStateReadyToRenderCreator
 } from './actions';
-//import {normalizeGraphQLQueryResponse} from './graphql';
-//import {accessToken} from './idam';
-// TODO import other epics here.
-//import {demoPageEpic} from './containers/demo-page/epic';
+import {normalizeGraphQLQueryResponse} from './graphql';
+// TODO import your other epics here if you have any.
+// import {demoPageEpic} from './containers/demo-page/epic';
 
 /**
  * Isomorphic Observable.ajax request. TODO maybe make it an npm package.
@@ -67,7 +66,7 @@ const fetchGraphQLQueryEpic = action$ =>
   action$.ofType(ROOT_FETCH_GRAPHQL_QUERY)
     .mergeMap(action =>
       request({
-        url: 'https://frae-local.fraedom-dev.com:8088/graphql',
+        url: 'http://159.203.96.223/graphql',
         body: action.payload,
         method: 'POST',
         headers: {
@@ -77,7 +76,7 @@ const fetchGraphQLQueryEpic = action$ =>
         }
       })
       // TODO supply identifier mappings here if necessary , {Param: 'name', Something: 'key'}))
-        .map((payload) => payload.response.data) // normalizeGraphQLQueryResponse(payload.response.data))
+        .map((payload) => normalizeGraphQLQueryResponse(payload.response.data))
         .takeUntil(action$.ofType(ROOT_FETCH_GRAPHQL_QUERY_CANCEL))
         .map(fetchGraphQLQuerySucceededCreator)
         .retry(2)
@@ -94,6 +93,8 @@ const stateReadyToRenderEpic = action$ => action$.ofType(ROOT_FETCH_GRAPHQL_QUER
  * Export the root epic.
  */
 export default combineEpics(
+  // TODO import your other epics here if you have any.
+  // demoPageEpic,
   stateReadyToRenderEpic,
   fetchGraphQLQueryEpic
 );

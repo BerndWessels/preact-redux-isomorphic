@@ -93,18 +93,53 @@ Replace it with your own front-end components if you like. Just make sure they a
 
 #### Normalized GraphQL Entity Redux State
 
-`Coming soon:`
-We love GraphQL. That's why there is an example on how to use it right.
-Basically each query response will be normalized into the redux store.
+You can replace this easily with whatever data fetching technology you like but we really
+encourage you to embrace GraphQL.
 
-If you don't like/need it replace it with whatever data fetching technology you like.
+If you are using `GraphQL` and `Redux` you are most likely to normalize any `GraphQL Query`
+into a `normalized entity store`.
+
+To make this as simple and easy to use as possible we provide a script that can extract all
+`GraphQL Entities` from a given `GraphQL Endpoint` and automatically create the `Entity Reducers`
+for you.
+
+You run this script initially and then whenever the `GraphQL Schema` is about to change.
+
+##### Usage
+
+###### Override
+
+If you don't make any manual changes to any of the `Entity Reducers` you can just run
+
+`npm run graphql:override`
+
+This will generate and override your `Entity Reducers` automatically and you are ready to go.
+
+###### Merge
+
+If you are extending the `Entity Reducers` with additional functionality you must run
+
+`npm run graphql:merge`
+
+This will generate all the `Entity Reducers` in the `scripts/graphql/generated` folder.
+
+You can now manually merge the generated
+
+`...Reducer.js` files into `src/entities`
+
+and
+ 
+ `types.json` file into `src/graphql`
+
+without losing any of the extensions you've previously added to the `Entity Reducers`.
 
 ## Getting started
 
 ### Preparations
 
 - Either provide your own ssl certificates of change the code to use http instead of https!
-- To get a response from the GraphQL API you need to run your own GraphQL server and adjust the query.
+- To get a response from the GraphQL API you need to run your own GraphQL server,
+adjust the query and create the `Entity Reducers` (see above for details)!
 Otherwise just replace it with your ordinary REST APIs.
 - Fork and clone this repo.
 - `npm install`
@@ -146,6 +181,15 @@ Make sure you don't check those in to GIT!!!
 `node dist/server/main`
 
 This serves via https and requires you to provide your own certificates since it is intended to be for production.
+
+### Server Side Rendering (SSR)
+
+The server will only render and serve the site to the client when the `ROOT_STATE_READY_TO_RENDER` action has been dispatched.
+
+This example dispatches this action once the first `GraphQL Query` had a successful response.
+
+You can replace that easily with your own custom logic. Just make sure you dispatch the `ROOT_STATE_READY_TO_RENDER` action
+when you are ready to render and serve the site to the client.
 
 # Contributing
 

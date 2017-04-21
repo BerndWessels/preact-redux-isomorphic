@@ -1,0 +1,27 @@
+/**
+* Bernd Wessels (https://github.com/BerndWessels/)
+*
+* Copyright © 2016 Bernd Wessels. All rights reserved.
+*
+* This source code is licensed under the MIT license found in the
+* LICENSE.txt file in the root directory of this source tree.
+*/
+
+/**
+ * Import dependencies.
+ */
+import {combineReducers} from 'redux';
+
+/**
+ * Import local dependencies.
+ */
+<% for(var i=0; i<types.length; i++) {%>import {<%= types[i].name %>Reducer} from './<%= types[i].name %>Reducer';
+<% } %>
+
+/**
+ * Export the entities store.
+ */
+export const entitiesReducer = combineReducers({
+<% for(var i=0; i<types.length; i++) {%>  <%= types[i].Name %>: <%= types[i].name %>Reducer,
+<% } %>
+});
