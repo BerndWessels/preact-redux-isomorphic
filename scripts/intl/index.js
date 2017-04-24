@@ -91,6 +91,10 @@ function readPO(filename) {
     }
   }
   let reducedTranslations = R.reduce((a, b) => {
+    if(!b.lines.msgid.length || !b.lines.msgid[0].length) {
+      console.log('Ignoring empty [msgid]. This was most likely generated as a comment from a translation tool.');
+      return a;
+    }
     if (b.msgctxt)
       a[b.msgctxt] = b;
     else
