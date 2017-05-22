@@ -11,6 +11,7 @@ The goal is to use the same code to achieve
 - a PWA (progressive web app)
 - a SPA (single page application) that can be serverless and hosted on a CDN
 - a SSR (server-side rendered) app with SEO (search engine optimization) support
+- a serverless SSR (running in AWS Lambda and static resources in AWS S3)
 
 ### Latest and greatest
 
@@ -190,6 +191,24 @@ This example dispatches this action once the first `GraphQL Query` had a success
 
 You can replace that easily with your own custom logic. Just make sure you dispatch the `ROOT_STATE_READY_TO_RENDER` action
 when you are ready to render and serve the site to the client.
+
+### Serverless SSR on AWS
+
+To build for a real serverless SSR just run `npm run build:serverless`
+
+- This will give you a `client` folder.
+  - Create a `S3` bucket that will host your `static resources`.
+  - Create a subfolder called `_` within that bucket.
+  - Copy everything within the `client` folder into the `_` subfolder in the `S3` bucket.
+- This will also give you the server files.
+  - Create a `Lambda` function.
+  - Zip the `index.js` and `client` folder together into an archive and upload it into your `Lambda` function.
+- Now create a `CloudFront Distribution` with 2 `origins`.
+  - The `default origin` will point to the `API Gateway Endpoint` that calls the `Lambda Function`.
+  - The resource `origin` uses the `_` path to point to the `S3` static resources bucket.
+
+If you have no idea what all this is or you like more details, please contact me. I have `terraform` scripts that build
+all of this infrastructure automatically.
 
 # Contributing
 

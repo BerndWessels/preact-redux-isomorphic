@@ -29,7 +29,12 @@ import DemoSnackbar from './components/demo-snackbar/component';
 import DemoSwitch from './components/demo-switch/component';
 import DemoTextField from './components/demo-text-field/component';
 import DemoTheme from './components/demo-theme/component';
+
+/**
+ * Import actions.
+ */
 import {fetchGraphQLQueryCreator} from './actions';
+import {rootStateReadyToRenderCreator} from './actions';
 
 /**
  * Import styles.
@@ -96,21 +101,22 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onNavigate: (path) => dispatch(push(path)),
-    onReady: () => dispatch(fetchGraphQLQueryCreator({
-        query: `{
-          Fake {
-            _id
-            firstName
-            lastName
-            Address {
-              country
-              countryCode
-            }
-          }
-        }
-      `
-      })
-    )
+    onReady: () => dispatch(rootStateReadyToRenderCreator())
+    //   onReady: () => dispatch(fetchGraphQLQueryCreator({
+    //       query: `{
+    //         Fake {
+    //           _id
+    //           firstName
+    //           lastName
+    //           Address {
+    //             country
+    //             countryCode
+    //           }
+    //         }
+    //       }
+    //     `
+    //     })
+    //   )
   }
 };
 

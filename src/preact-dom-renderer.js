@@ -1,4 +1,4 @@
-import {h, render} from 'preact';
+import { h, render } from 'preact';
 import undom from 'undom';
 
 const VOID_ELEMENTS = [
@@ -35,12 +35,13 @@ const attr = (a) => {
 };
 
 const serializeHtml = (el) => {
-  const {nodeType, normalizedNodeName, textContent, attributes, childNodes, innerHTML} = el;
+  const { nodeType, nodeName, textContent, attributes, childNodes, innerHTML } = el;
+  const normalizedNodeName = nodeName.toLowerCase();
   if (nodeType === 3) {
     return enc(textContent);
   }
   const start = `<${normalizedNodeName}${attributes.map(attr).join('')}`;
-  if (VOID_ELEMENTS.includes(normalizedNodeName)) {
+  if (VOID_ELEMENTS.indexOf(normalizedNodeName) > -1) {
     return `${start} />`;
   }
   return `${start}>${innerHTML || childNodes.map(serializeHtml).join('')}</${normalizedNodeName}>`;

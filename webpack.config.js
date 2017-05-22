@@ -31,7 +31,9 @@ module.exports = function () {
   // Get the build environment.
   const DEV = process.env.NODE_ENV === 'development';
   const WEB = process.env.TARGET === 'web';
+  const AWS = process.env.TARGET === 'serverless';
   const BASEURL = process.env.BASEURL;
+  const RESOURCEPATH = process.env.RESOURCEPATH || '';
   const HTTPS = contains('--https', process.argv);
   // Build sass loaders.
   function getSassLoaders(modules) {
@@ -94,20 +96,21 @@ module.exports = function () {
     },
     // https://webpack.js.org/configuration/entry-context
     entry: {
-      main: path.resolve(__dirname, WEB ? './src/index.client.js' : './src/server.js')
+      index: path.resolve(__dirname, WEB ? './src/index.client.js' : AWS ? './src/serverless.js' : './src/server.js')
     },
     // https://webpack.js.org/configuration/output
     output: {
       filename: WEB ? '[name].[hash].js' : '[name].js',
-      path: path.resolve(__dirname, WEB ? './dist/client' : './dist/server'),
-      publicPath: '' // todo
+      path: path.resolve(__dirname, WEB ? './dist/client' : AWS ? './dist' : './dist/server'),
+      publicPath: AWS ? '/_/' : ''
     },
     // https://webpack.js.org/configuration/resolve
     resolve: {
       alias: {
         'preact': 'preact',
         'react': 'preact-compat',
-        'react-dom': 'preact-compat'
+        'react-dom': 'preact-compat',
+        'react-redux': 'preact-redux'
       },
       extensions: ['.js', '.jsx', '.json', '.scss'],
       modules: ['node_modules']
@@ -117,7 +120,7 @@ module.exports = function () {
       noParse: /\.min\.js/,
       rules: [{
         test: /\.jsx?$/,
-        exclude: [/node_modules(?![\/\\]preact-mdc)/],
+        exclude: [/node_modules(?!([\/\\]preact-mdc|[\/\\]aws-serverless-express))/],
         use: [{
           // https://github.com/babel/babel-loader
           loader: 'babel-loader',
@@ -149,7 +152,7 @@ module.exports = function () {
     // https://webpack.js.org/configuration/plugins
     plugins: [
       // https://github.com/johnagan/clean-webpack-plugin
-      new CleanWebpackPlugin(WEB ? ['dist/client'] : ['dist/server'], __dirname),
+      new CleanWebpackPlugin(WEB ? ['dist/client'] : AWS ? ['dist'] : ['dist/server'], __dirname),
       // https://github.com/kevlened/copy-webpack-plugin
       new CopyWebpackPlugin([
         {from: 'public'}
@@ -174,7 +177,9 @@ module.exports = function () {
         inject: false,
         baseurl: BASEURL,
         manifest: 'manifest.json',
-        themeColor: '#333'
+        themeColor: '#333',
+        favIcon: 'favicon.ico',
+        resourcePath: RESOURCEPATH
       }, !DEV ? {
         serviceWorker: 'service-worker.js'
       } : {}))

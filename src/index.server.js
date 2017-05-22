@@ -46,14 +46,16 @@ export default function (req) {
      * Injected reducer to process the "ready to render" action.
      */
     const serverReducer = (state = {}, action) => {
-      console.log('action => ', action);
+
       if (action.type === ROOT_STATE_READY_TO_RENDER) {
-        let state = store.getState();
-        delete state._server_;
-        delete state.router;
-        let html = renderer.html();
-        renderer.tearDown();
-        resolve({context, html, state});
+        setTimeout(() => {
+          let state = store.getState();
+          delete state._server_;
+          delete state.router;
+          let html = renderer.html();
+          renderer.tearDown();
+          resolve({context, html, state});
+        }, 1);
       }
       return state;
     };
@@ -92,15 +94,19 @@ export default function (req) {
     // Router context for capturing redirects.
     let context = {};
 
-    // Run the app on the server.
-    renderer.render(
-      <Provider store={store}>
-        <IntlProvider locale={locale} messages={locales[locale].messages}>
-          <StaticRouter location={req.url} context={context}>
-            <Root/>
-          </StaticRouter>
-        </IntlProvider>
-      </Provider>
-    );
+    try {
+      // Run the app on the server.
+      renderer.render(
+        <Provider store={store}>
+          <IntlProvider locale={locale} messages={locales[locale].messages}>
+            <StaticRouter location={req.url} context={context}>
+              <Root/>
+            </StaticRouter>
+          </IntlProvider>
+        </Provider>
+      );
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
   });
 }

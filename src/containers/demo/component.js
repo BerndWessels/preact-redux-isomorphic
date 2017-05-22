@@ -23,6 +23,11 @@ import List from 'preact-mdc/material-list';
 import ListItem from 'preact-mdc/material-list-item';
 
 /**
+ * Import actions.
+ */
+import {rootStateReadyToRenderCreator} from '../../actions';
+
+/**
  * Import styles.
  */
 import '@material/typography/mdc-typography.scss';
@@ -32,6 +37,10 @@ import styles from './styles';
  * Create the component.
  */
 class Demo extends Component {
+
+  componentDidMount = () => {
+    this.props.onReady(); // TODO Usually a GraphQL response would trigger the SSR to render.
+  };
 
   render({onNavigate}, state) {
     let classes = classnames(styles.root, 'mdc-typography');
@@ -74,7 +83,8 @@ const mapDispatchToProps = (dispatch) => {
     onNavigate: (e, path) => {
       e.preventDefault();
       dispatch(push(path));
-    }
+    },
+    onReady: () => dispatch(rootStateReadyToRenderCreator())
   };
 };
 

@@ -11,3 +11,5 @@
 ### Version 0.5.0
 - Added GraphQL entity generator scripts and example implementation
 - Example GraphQL server currently not responding to calls from epic because of CORS issue - will be resolved soon, or replace with your own!
+### Version 0.6.0
+- Added AWS Lambda support for serverless rendering within a Lamda for SEO Websites.
